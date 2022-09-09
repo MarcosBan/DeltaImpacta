@@ -51,7 +51,7 @@ export default function (props) {
     <div className="Auth-form-container">
       <form className="Auth-form">
         <div className="Auth-form-content">
-          <h3 className="Auth-form-title">Delta - Cadastre-se</h3>
+          <h3 className="Auth-form-title">Cadastre-se</h3>
           <div className="text-center">
             Já Possui cadastro?{" "}
             <span className="link-primary" onClick={changeAuthMode}>

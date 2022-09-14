@@ -7,16 +7,14 @@ from pydantic import BaseModel
 from datetime import datetime
 from . msal import getToken
 from .data_modification import format_query, format_search_params, format_query
+from .data_access import Database
 
 import requests
-
+database = None
 app=fastapi.FastAPI()
 
-database.initialize()
-
-@app.get("/heartbeat")
-async def health():
-    return "OK"
+if(not database):
+    database = Database()
 
 class Usuario(BaseModel):
     nome:str
@@ -24,8 +22,13 @@ class Usuario(BaseModel):
     email:str
     data_nascimento: str
 
-@app.get()
-async def search(id : Union[str, None] = None, nome : Union[str, None] = None, usuario : Union[str, None] = None, data_nascimento : Union[str, None] = None, data_criacao : Union[str, None] = None, data_alteracao : Union[str, None] = None):
+
+@app.get("/heartbeat")
+def health():
+    return "OK"
+
+@app.get("/")
+def search(id : Union[str, None] = None, nome : Union[str, None] = None, usuario : Union[str, None] = None, data_nascimento : Union[str, None] = None, data_criacao : Union[str, None] = None, data_alteracao : Union[str, None] = None):
     ret = None
     status_code = None
     try:
@@ -48,8 +51,8 @@ async def search(id : Union[str, None] = None, nome : Union[str, None] = None, u
             mimetype='application/json'     
         )
 
-@app.post()
-async def add(usuario: Usuario):
+@app.post("/")
+def add(usuario: Usuario):
     endpoint = "https://graph.microsoft.com/v1.0/users"
     http_headers = {'Authorization': 'Bearer ' + getToken()['access_token'],
                     'Accept': 'application/json',
@@ -79,21 +82,20 @@ async def add(usuario: Usuario):
     MSUser = response.json()
     collection = MSUser["id"]
     item_to_add = usuario.dict()
-    item_to_add["data_nascimento"] = datetime.strftime(("%Y-%m-%d %H:%M:%S")
+    item_to_add["data_nascimento"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     item_to_add["data_criacao"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     item_to_add["data_modificacao"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    statement = format_query("Usuario", item_to_add, "insert")
+    database.execute_non_query(statement)
     
-    dic = Database.insert(collection,item_to_add)
-    obj = Database.find(collection,dic)
-    ret = dumps(obj)
     return func.HttpResponse(
-          ret, 
-          status_code = 203,
+          "OK", 
+          status_code = 200,
           mimetype='application/json'      
      )
 
 @app.put()
-async def update(usuario: Usuario):
+def update(usuario: Usuario):
     pass
    
 def main(req: func.HttpRequest, context: func.Context) -> func.HttpResponse:

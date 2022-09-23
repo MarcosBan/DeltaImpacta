@@ -5,7 +5,8 @@ resource "azurerm_storage_account" "BudgeTrackerFront" {
   account_tier             = "Standard"
   account_replication_type = "LRS"
   account_kind             = "StorageV2"
-  azurerm_storage_account  = true
+  enable_https_traffic_only = true
+
 
   static_website {
     index_document = "index.html"

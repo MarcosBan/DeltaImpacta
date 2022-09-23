@@ -10,7 +10,7 @@ resource "azurerm_storage_account" "BudgeTrackerFront" {
   static_website {
     index_document = "index.html"
   }
-
+#Teste mudança
 }
 resource "azurerm_storage_container" "WebContainer" {
   name                  = "$web"

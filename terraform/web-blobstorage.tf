@@ -12,9 +12,3 @@ resource "azurerm_storage_account" "BudgeTrackerFront" {
     index_document = "index.html"
   }
 }
-#Teste mudança
-resource "azurerm_storage_container" "WebContainer" {
-  name                  = "$web"
-  storage_account_name  = azurerm_storage_account.BudgeTrackerFront.name
-  container_access_type = "private"
-}

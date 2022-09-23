@@ -1,5 +1,5 @@
 resource "azurerm_storage_account" "BudgeTrackerFront" {
-  name                      = "BudgetTracker-Front"
+  name                      = "BudgetTrackerFront"
   resource_group_name       = azurerm_resource_group.DeltaResources.name
   location                  = azurerm_resource_group.DeltaResources.location
   account_tier              = "Standard"

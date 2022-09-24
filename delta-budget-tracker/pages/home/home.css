@@ -1,8 +1,46 @@
-header {
-    text-align: right;
+body {
+  background: rgb(245, 245, 245);
+}
+ol {
+  margin-top: 100px;
+  margin-left: 200px;
+  list-style: none;
+  padding: 0;
 }
 
-header button {
-    width: auto;
-    cursor: pointer;
+ol li {
+  cursor:pointer;
+  background: white;
+  padding: 8px 16px;
+  border-bottom: 1px solid gray;
+  width: 80%;
+  
+}
+
+ol li:hover{
+  opacity: 0.8;
+}
+
+p {
+  margin: 4px 0;
+}
+
+ol li.expense {
+  border-left: 10px solid red;
+}
+
+ol li.income {
+  border-left: 10px solid green;
+}
+
+
+h1.home{
+  text-align: center;
+  font-size: 32px;
+  font-weight: 900;
+  padding: 11px 8px;
+  border-bottom: 1px solid rgba(0,0,0,0.25);
+  background-color: #606DE3;
+  color: #FFFFFF;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }

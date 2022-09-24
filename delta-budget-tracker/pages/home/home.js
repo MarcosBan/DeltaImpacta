@@ -5,3 +5,7 @@ function logout() {
         alert("Erro ao efetuar o logout")
     })
 }
+
+function test () {
+    alert('delayer')
+}

@@ -3,17 +3,114 @@
 <html>
 
 <head>
-    <title>Home - Controle de Gastos</title>
+    <title>Home - Delta Budget Tracker</title>
 </head>
-
+<div>
+    <h1 class="home">Lançamentos</h1>
+</div>
 <body>
-    <header>
-        <button type="button" class="clear" onclick="logout()">Sair</button>
-    </header>
+<div class="navigation sidebar-open">
+    <div class="menuToggle"></div>
+    <ul>
+        <li class="list" style="--clr:#606DE3">
+            <a href="#">
+                <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                <span class="text">Home</span>
+            </a>
+        </li>
+        <li class="list" style="--clr:#606DE3">
+            <a href="#">
+                <span class="icon"><ion-icon name="caret-back-circle-outline"></ion-icon></span>
+                <span class="text">Entradas</span>
+            </a>
+        </li>
+        <li class="list" style="--clr:#606DE3">
+            <a href="#">
+                <span class="icon"><ion-icon name="caret-forward-circle-outline"></ion-icon></span>
+                <span class="text">Gastos</span>
+            </a>
+        </li>
+        <li class="list " style="--clr:#606DE3">
+            <a href="#">
+                <span class="icon"><ion-icon name="wallet-outline"></ion-icon></span>
+                <span class="text">Despesas</span>
+            </a>
+        </li>
+        <li class="list" style="--clr:#606DE3">
+            <a href="#">
+                <span class="icon"><ion-icon name="person-circle-outline"></ion-icon></span>
+                <span class="text">Usuário</span>
+            </a>
+        </li>
+        <li class="list" style="--clr:#606DE3">
+            <a href="#" onclick="logout()">
+                <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
+                <span class="text">Sair</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div class="results">
+    <ol>
+            <li class="expense">
+                <b>04/01/2022</b>
+                <p>R$ 10,00</p>
+                <p>Supermercado</p>
+            </li>
+            <li = class="income">
+                <b>03/01/2022</b>
+                <p>R$ 15,00</p>
+                <p>Salário</p>
+                <p>Empresa A</p>
+            </li>
+            <li class="expense">
+                <b>22/09/2022</b>
+                <p>EUR 25,00</p>
+                <p>Transporte</p>
+                <p>Metrô Ida e Vtableta</p>
+            </li>
+            <li class="expense">
+                <b>23/09/2022</b>
+                <p>USD 10,00</p>
+                <p>Aluguel</p>
+                <p>Mensalidade</p>
+            </li>
+            <li class="expense">
+                <b>04/01/2022</b>
+                <p>R$ 10,00</p>
+                <p>Supermercado</p>
+            </li>
+            <li = class="income">
+                <b>03/01/2022</b>
+                <p>R$ 15,00</p>
+                <p>Salário</p>
+                <p>Empresa A</p>
+            </li>
+            <li class="expense">
+                <b>22/09/2022</b>
+                <p>EUR 25,00</p>
+                <p>Transporte</p>
+                <p>Metrô Ida e Volta</p>
+            </li>
+            <li class="expense">
+                <b>23/09/2022</b>
+                <p>USD 10,00</p>
+                <p>Aluguel</p>
+                <p>Mensalidade</p>
+            </li>
+            
+        </ol>
+        </div>
+    <button class="fab fixed bottom right">+</button>
     
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="../../sidebar.js"></script>
 </body>
 <link rel="stylesheet" href="../../global.css" />
 <link rel="stylesheet" href="home.css" />
+<link rel="stylesheet" href="../../sidebar.css">
 
 <script src="https://www.gstatic.com/firebasejs/9.10.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.10.0/firebase-auth-compat.js"></script>

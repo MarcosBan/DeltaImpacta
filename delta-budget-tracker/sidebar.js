@@ -12,3 +12,16 @@ const menuToggle = document.querySelector('.menuToggle');
             }
             list.forEach((item) =>
             item.addEventListener('click', activeLink))
+
+            
+function logout() {
+    firebase.auth().signOut().then(() => {
+        window.location.href = "../../index.html"
+    }).catch(error => {
+        alert("Erro ao efetuar o logout")
+    })
+}
+
+function delayed_logout() {
+    setTimeout(logout, 1000)
+}

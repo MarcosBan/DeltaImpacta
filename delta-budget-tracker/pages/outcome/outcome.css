@@ -18,8 +18,8 @@ body {
   }
   
   ol li:hover{
-    opacity: 0.8;
-  }
+    background-color: #606de394;
+    }
   
   p {
     margin: 4px 0;

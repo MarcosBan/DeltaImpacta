@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html>
+    <link rel="stylesheet" href="../../global.css" />
+    <link rel="stylesheet" href="../../sidebar.css">
+    <link rel="stylesheet" href="./income.css">
     <head>
         <title>Entradas - Delta Budget Tracker</title>
     </head>
@@ -25,13 +28,13 @@
                 <li class="list" style="--clr:#606DE3">
                     <a href="#" onclick="delayed_outcome()">
                         <span class="icon"><ion-icon name="caret-forward-circle-outline"></ion-icon></span>
-                        <span class="text">Saídas</span>
+                        <span class="text">Despesas</span>
                     </a>
                 </li>
                 <li class="list " style="--clr:#606DE3">
                     <a href="#" onclick="delayed_expenses()">
                         <span class="icon"><ion-icon name="wallet-outline"></ion-icon></span>
-                        <span class="text">Despesas</span>
+                        <span class="text">Transações</span>
                     </a>
                 </li>
                 <li class="list" style="--clr:#606DE3">
@@ -49,7 +52,7 @@
             </ul>
         </div>
         <ol id="transactions"></ol>
-        <button class="fab fixed bottom right">+</button>
+        <button class="fab fixed bottom right" onclick="newTransaction()">+</button>
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
@@ -57,10 +60,6 @@
     <script src="https://www.gstatic.com/firebasejs/9.10.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore-compat.js"></script>
     
-    <link rel="stylesheet" href="../../global.css" />
-    <link rel="stylesheet" href="../../sidebar.css">
-    <link rel="stylesheet" href="./income.css">
-
     <script src="../../firebase-init.js"></script>
     <script src="../../auth-guard.js"></script>
     <script src="../../sidebar.js"></script>

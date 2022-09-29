@@ -14,6 +14,10 @@ function toOutcome() {
     window.location.href = "./outcome.html";
 }
 
+function newTransaction() {
+    window.location.href="../transaction-out/transaction-out.html"
+}
+
 function delayed_home() {
     setTimeout(toHome, 600)
 }

@@ -1,0 +1,121 @@
+<!doctype html>
+
+<html>
+    <link rel="stylesheet" href="../../global.css" />
+    <link rel="stylesheet" href="../../sidebar.css">
+    <link rel="stylesheet" href="transaction.css" />
+<head>
+    <title>Adicionar transação - Delta Budget Tracker</title>
+</head>
+<div>
+    <h1 class="home">Adicionar</h1>
+</div>
+<body>
+    <div class="navigation sidebar-open">
+        <div class="menuToggle"></div>
+        <ul>
+            <li class="list" style="--clr:#606DE3">
+                <a href="#" onclick="delayed_home()">
+                    <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                    <span class="text">Home</span>
+                </a>
+            </li>
+            <li class="list" style="--clr:#606DE3">
+                <a href="#" onclick="delayed_income()">
+                    <span class="icon"><ion-icon name="caret-back-circle-outline"></ion-icon></span>
+                    <span class="text">Entradas</span>
+                </a>
+            </li>
+            <li class="list" style="--clr:#606DE3">
+                <a href="#" onclick="delayed_outcome()">
+                    <span class="icon"><ion-icon name="caret-forward-circle-outline"></ion-icon></span>
+                    <span class="text">Despesas</span>
+                </a>
+            </li>
+            <li class="list " style="--clr:#606DE3">
+                <a href="#" onclick="delayed_expenses()">
+                    <span class="icon"><ion-icon name="wallet-outline"></ion-icon></span>
+                    <span class="text">Transações</span>
+                </a>
+            </li>
+            <li class="list" style="--clr:#606DE3">
+                <a href="#">
+                    <span class="icon"><ion-icon name="person-circle-outline"></ion-icon></span>
+                    <span class="text">Usuário</span>
+                </a>
+            </li>
+            <li class="list" style="--clr:#606DE3">
+                <a href="#" onclick="delayed_logout()">
+                    <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
+                    <span class="text">Sair</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <main class="centralize">
+        <form>
+            <div class="form-field">
+                <div><label>Transação *</label></div>
+                    <input type="radio" name="type" checked id="expense"><label for="expense">Despesa</label>
+                    <input type="radio" name="type" id="income"><label for="income">Entrada</label>
+                </div>
+                <div><label>Data *</label></div>
+                    <input type="date" onchange="onChangeDate()" id="date">
+                    <div class="error" id="date-required-error">
+                        A data é obrigatória/inválida.
+                    </div>
+                  </div>
+            </div>
+                <div><label>Moeda *</label></div>
+                <select id="currency">
+                    <option value="$">Dólar</option>
+                    <option value="€">Euro</option>
+                    <option selected="R$">Real</option>
+                </select>
+                <div><label>Valor *</label></div>
+                    <input type="number" onchange="onChangeValue()" id="value">
+                    <div class="error" id="value-required-error">
+                        O Valor é obrigatório.
+                    </div>
+                    <div class="error" id="value-less-or-equal-to-zero-error">
+                        O Valor deve ser maior que zero.
+                    </div>
+                </div>
+                <div><label>Tipo de Transação *</label></div>
+                <select onchange="onChangeTransactionType()" id="transaction-type">
+                    <option value="">-- Selecione um tipo de transação --</option>
+                    <option>Alimentação</option>
+                    <option>Supermercado</option>
+                    <option>Lazer</option>
+                    <option>Educação</option>
+                    <option>Entretenimento</option>
+                    <option>Cartão de Crédito</option>
+                    <option>Salário</option>
+                    <option>Outros</option>
+                </select>
+                <div class="error" id="transaction-type-required-error">
+                    O Tipo da transação é obrigatório.
+                </div>
+            </div>
+            <div class="form-field">
+                <div><label>Descrição</label></div>
+                <input id="description" type="text">
+            </div>    
+            <button onclick="saveTransaction()" id="save-button" type="button" class="solid" disabled>Salvar</button>
+            <button type="button" class="clear" onclick="window.history.go(-1); return false;">Cancelar</button>
+        </form>
+    </main>
+    
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.10.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.10.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore-compat.js"></script>
+
+<script src="../../firebase-init.js"></script>
+<script src="transaction.js"></script>
+<script src="../../auth-guard.js"></script>
+<script src="../../loading.js"></script>
+<script src="../../sidebar.js"></script>
+</body>
+</html>

@@ -14,6 +14,10 @@ function toOutcome() {
     window.location.href = "../outcome/outcome.html";
 }
 
+function newTransaction() {
+    window.location.href="../transaction/transaction.html"
+}
+
 function delayed_home() {
     setTimeout(toHome, 600)
 }
@@ -80,6 +84,48 @@ function addTransactionToScreen(transactions) {
             description.innerHTML = transaction.description;
             li.appendChild(description);
         }
+        /*
+        const header = document.createElement('div')
+        header.classList.add('header')
+
+        const dropbtn = document.createElement('div')
+        dropbtn.classList.add('dropdown')
+        
+        const unordList = document.createElement('ul')
+        unordList.classList.add('dropbtn')
+        unordList.classList.add('icons')
+        unordList.classList.add('btn-right')
+        unordList.classList.add('showLeft')
+        
+        const subLi1 = document.createElement('li')
+        const subLi2 = document.createElement('li')
+        const subLi3 = document.createElement('li')
+        unordList.appendChild(subLi1)
+        unordList.appendChild(subLi2)
+        unordList.appendChild(subLi3)
+        unordList.setAttribute('onclick', 'showDropdown()')
+
+        dropbtn.appendChild(unordList)
+
+        const dropMenu = document.createElement('div')
+        dropMenu.setAttribute('id', 'myDropdown')
+        dropMenu.classList.add('dropdown-content')
+        
+        const edit = document.createElement('a')
+        edit.setAttribute('href', '#')
+        edit.innerHTML = 'Editar'
+
+        const del = document.createElement('a')
+        del.setAttribute('href', '#')
+        del.innerHTML = 'Excluir'
+
+        dropMenu.appendChild(edit)
+        dropMenu.appendChild(del)
+
+        dropbtn.appendChild(dropMenu)
+        header.appendChild(dropbtn	)
+  
+        li.appendChild(header) */
     });
 }
 
@@ -89,4 +135,10 @@ function formatDate(date) {
 
 function formatMoney(money) {
     return `${money.currency} ${money.value.toFixed(2)}`
+}
+
+function changeLanguage(language) {
+    var element = document.getElementById("url");
+    element.value = language;
+    element.innerHTML = language;
 }

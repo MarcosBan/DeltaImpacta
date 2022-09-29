@@ -30,6 +30,10 @@ function delayed_outcome() {
     setTimeout(toOutcome, 600)
 }
 
+function newTransaction() {
+    window.location.href="../transaction-in/transaction-in.html"
+}
+
 firebase.auth().onAuthStateChanged(user => {
     if(user){
         findTransactions(user);

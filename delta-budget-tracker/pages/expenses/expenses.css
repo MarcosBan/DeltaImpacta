@@ -14,12 +14,12 @@ ol li {
   padding: 8px 16px;
   border-bottom: 1px solid gray;
   width: 80%;
-  
+    
 }
 
 ol li:hover{
-  opacity: 0.8;
-}
+  background-color: #606de394;
+  }
 
 p {
   margin: 4px 0;
@@ -27,10 +27,12 @@ p {
 
 ol li.expense {
   border-left: 10px solid red;
+  position: relative;
 }
 
 ol li.income {
   border-left: 10px solid green;
+  position: relative;
 }
 
 

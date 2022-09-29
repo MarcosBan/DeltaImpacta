@@ -1,0 +1,119 @@
+body {
+    background: rgb(245, 245, 245);
+  }
+  ol {
+    margin-top: 100px;
+    margin-left: 200px;
+    list-style: none;
+    padding: 0;
+  }
+  
+  ol li {
+    cursor:pointer;
+    background: white;
+    padding: 8px 16px;
+    border-bottom: 1px solid gray;
+    width: 80%;
+    position: relative;
+      
+  }
+
+  ol li .dropdown {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+  }
+  
+  ol li:hover{
+    color: rgb(155, 150, 228);
+    }
+  
+  p {
+    margin: 4px 0;
+  }
+  
+  ol li.expense {
+    border-left: 10px solid red;
+    position: relative;
+  }
+  
+  ol li.income {
+    border-left: 10px solid green;
+    position: relative;
+  }
+  
+  
+  h1.home{
+    text-align: center;
+    font-size: 32px;
+    font-weight: 900;
+    padding: 11px 8px;
+    border-bottom: 1px solid rgba(0,0,0,0.25);
+    background-color: #606DE3;
+    color: #FFFFFF;
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  }
+
+
+*{margin: 0;padding:0px}
+
+.showLeft{
+    position: relative;
+    background-color: #fff !important;
+    border:1px solid #fff !important;
+    text-shadow: none !important;
+    color:#fff !important;
+    padding:10px;
+    right: 13px;
+}
+
+.icons li {
+    
+    padding: 3px;
+    z-index: 1;
+}
+
+.dropdown {
+    width: 10px;
+    height: 10px;
+}
+
+svg.dropbtn {
+  position: relative;
+  right: 30px;
+}
+
+.dropdown-content {
+    display: none;
+    position: relative;
+    margin-top: 0px;
+    background-color: #f9f9f9;
+    min-width: 100px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    right: 0;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 5px 10px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown a:hover {background-color: #f1f1f1}
+
+.show {display:block;}
+
+
+
+
+
+
+
+
+
+
+
+

@@ -50,7 +50,9 @@ function findTransactions(user) {
     .get()
     .then(snapshot => {
         hideLoading()
-        const transactions = snapshot.docs.map(doc => doc.data());
+        const transactions = snapshot.docs.map(doc => ({
+            ...doc.data(),
+            uid: doc.id}));
         addTransactionToScreen(transactions);
     }).catch(error => {
         hideLoading();
@@ -65,8 +67,31 @@ function addTransactionToScreen(transactions) {
     transactions.forEach(transaction => {
         const li = document.createElement('li')
         li.classList.add(transaction.type);
-        orderedList.appendChild(li);
+        li.id = transaction.uid;
+        li.addEventListener('click', () => {
+            window.location.href="../transaction-out/transaction-out.html?uid=" + transaction.uid;
+        })
 
+        const deleteButton = document.createElement("button");
+        deleteButton.classList.add("outline", "danger");
+        deleteButton.addEventListener("click", event => {
+            event.stopPropagation();
+            askRemoveTransaction(transaction);
+        })
+        deleteButton.innerHTML = "Excluir";
+
+        li.appendChild(deleteButton)
+
+        const editButton = document.createElement("button");
+        editButton.classList.add("outline", "edit");
+        editButton.addEventListener("click", event => {
+            event.stopPropagation();
+            window.location.href="../transaction-out/transaction-out.html?uid=" + transaction.uid;
+        })
+        editButton.innerHTML = "Editar";
+
+        li.appendChild(editButton)
+        
         const date = document.createElement('p');
         date.innerHTML = formatDate(transaction.date);
         li.appendChild(date);
@@ -84,7 +109,32 @@ function addTransactionToScreen(transactions) {
             description.innerHTML = transaction.description;
             li.appendChild(description);
         }
+
+        orderedList.appendChild(li);
     });
+}
+
+function askRemoveTransaction(transaction) {
+    const shouldRemove = confirm('Deseja remover a transação?');
+    if (shouldRemove) {
+        removeTransaction(transaction);
+    }
+}
+
+function removeTransaction(transaction) {
+    showLoading();
+    firebase.firestore()
+        .collection("transactions")
+        .doc(transaction.uid)
+        .delete()
+        .then(() => {
+            hideLoading();
+            document.getElementById(transaction.uid).remove();
+        }).catch(error => {
+            hideLoading();
+            console.log(error);
+            alert('Erro ao remover transação')
+        })
 }
 
 function formatDate(date) {

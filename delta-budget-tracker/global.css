@@ -108,3 +108,13 @@ button.fab.bottom {
 button.fab.right {
     right: 90px;
 }
+
+.outline.danger {
+    color: red;
+    border: 1px solid red;
+}
+
+.outline.edit {
+    color: blue;
+    border: 1px solid blue;
+}

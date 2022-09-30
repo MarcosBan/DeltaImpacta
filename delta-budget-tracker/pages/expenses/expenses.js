@@ -42,7 +42,7 @@ firebase.auth().onAuthStateChanged(user => {
 })
 
 function findTransactions(user) {
-    showLoading()
+    showLoading();
     firebase.firestore()
     .collection('transactions')
     .where('user.uid', '==', user.uid)
@@ -50,7 +50,9 @@ function findTransactions(user) {
     .get()
     .then(snapshot => {
         hideLoading()
-        const transactions = snapshot.docs.map(doc => doc.data());
+        const transactions = snapshot.docs.map(doc => ({
+            ...doc.data(),
+            uid: doc.id}));
         addTransactionToScreen(transactions);
     }).catch(error => {
         hideLoading();
@@ -65,8 +67,31 @@ function addTransactionToScreen(transactions) {
     transactions.forEach(transaction => {
         const li = document.createElement('li')
         li.classList.add(transaction.type);
-        orderedList.appendChild(li);
+        li.id = transaction.uid;
+        li.addEventListener('click', () => {
+            window.location.href="../transaction/transaction.html?uid=" + transaction.uid;
+        })
 
+        const deleteButton = document.createElement("button");
+        deleteButton.classList.add("outline", "danger");
+        deleteButton.addEventListener("click", event => {
+            event.stopPropagation();
+            askRemoveTransaction(transaction);
+        })
+        deleteButton.innerHTML = "Excluir";
+
+        li.appendChild(deleteButton)
+
+        const editButton = document.createElement("button");
+        editButton.classList.add("outline", "edit");
+        editButton.addEventListener("click", event => {
+            event.stopPropagation();
+            window.location.href="../transaction/transaction.html?uid=" + transaction.uid;
+        })
+        editButton.innerHTML = "Editar";
+
+        li.appendChild(editButton)
+        
         const date = document.createElement('p');
         date.innerHTML = formatDate(transaction.date);
         li.appendChild(date);
@@ -84,49 +109,33 @@ function addTransactionToScreen(transactions) {
             description.innerHTML = transaction.description;
             li.appendChild(description);
         }
-        /*
-        const header = document.createElement('div')
-        header.classList.add('header')
 
-        const dropbtn = document.createElement('div')
-        dropbtn.classList.add('dropdown')
+        orderedList.appendChild(li);
         
-        const unordList = document.createElement('ul')
-        unordList.classList.add('dropbtn')
-        unordList.classList.add('icons')
-        unordList.classList.add('btn-right')
-        unordList.classList.add('showLeft')
-        
-        const subLi1 = document.createElement('li')
-        const subLi2 = document.createElement('li')
-        const subLi3 = document.createElement('li')
-        unordList.appendChild(subLi1)
-        unordList.appendChild(subLi2)
-        unordList.appendChild(subLi3)
-        unordList.setAttribute('onclick', 'showDropdown()')
-
-        dropbtn.appendChild(unordList)
-
-        const dropMenu = document.createElement('div')
-        dropMenu.setAttribute('id', 'myDropdown')
-        dropMenu.classList.add('dropdown-content')
-        
-        const edit = document.createElement('a')
-        edit.setAttribute('href', '#')
-        edit.innerHTML = 'Editar'
-
-        const del = document.createElement('a')
-        del.setAttribute('href', '#')
-        del.innerHTML = 'Excluir'
-
-        dropMenu.appendChild(edit)
-        dropMenu.appendChild(del)
-
-        dropbtn.appendChild(dropMenu)
-        header.appendChild(dropbtn	)
-  
-        li.appendChild(header) */
     });
+}
+
+function askRemoveTransaction(transaction) {
+    const shouldRemove = confirm('Deseja remover a transação?');
+    if (shouldRemove) {
+        removeTransaction(transaction);
+    }
+}
+
+function removeTransaction(transaction) {
+    showLoading();
+    firebase.firestore()
+        .collection("transactions")
+        .doc(transaction.uid)
+        .delete()
+        .then(() => {
+            hideLoading();
+            document.getElementById(transaction.uid).remove();
+        }).catch(error => {
+            hideLoading();
+            console.log(error);
+            alert('Erro ao remover transação')
+        })
 }
 
 function formatDate(date) {
@@ -135,10 +144,4 @@ function formatDate(date) {
 
 function formatMoney(money) {
     return `${money.currency} ${money.value.toFixed(2)}`
-}
-
-function changeLanguage(language) {
-    var element = document.getElementById("url");
-    element.value = language;
-    element.innerHTML = language;
 }

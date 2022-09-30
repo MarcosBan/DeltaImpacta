@@ -44,3 +44,24 @@ body {
     color: #FFFFFF;
       font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   }
+
+  ol li:hover button.danger {
+    display: block;
+  }
+  
+  ol li:hover button.edit {
+    display: block;
+  }
+  
+  button.danger {
+    width: auto;
+    float: right;
+    display: none;
+  }
+  
+  button.edit {
+    width: auto;
+    float: right;
+    display: none;
+    margin-right: 2px;
+  }

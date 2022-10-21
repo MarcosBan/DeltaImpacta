@@ -1,40 +1,37 @@
+from usuario.routers import entrada, saida, tipo_entrada, tipo_saida
+from .database import *
 from fastapi import FastAPI
-from pydantic import BaseModel
-from redbird.repos import MemoryRepo
 import azure.functions as func
-from sqlalchemy import create_engine
-from redbird.repos import SQLRepo
+from .routers import usuario
 
-connection_string = "mysql+pymysql://%s:%s@%s:%s/%s" % (USER, PASSWORD, HOST, PORT, DATABASE)
-engine = create_engine(connection_string)
+app = FastAPI(title='Delta Budget Tracker API', description='APIs para usuario', version='0.1')
 
-app = FastAPI()
 
-repo = SQLRepo(engine=engine, table="my_table")
+@app.get("/")
+async def root():
+    return {"message": "Acordada!"}
 
-class Usuario(BaseModel):
-    nome:str
-    usuario: str
-    email:str
-    data_nascimento: str
-    
-@app.post("/users", description="Create an user")
-def create_item(item: Usuario):
-    #todo post to msal
-    repo.add(item)
 
-@app.get("/users", description="Get all users")
-def get_users():
-    return repo.filter_by().all()
+app.include_router(usuario.router_usuarios)
+app.include_router(tipo_entrada.router_tipo_entradas)
+app.include_router(tipo_saida.router_tipo_saidas)
+# app.include_router(entrada.router_entradas)
+# app.include_router(saida.router_saidas)
 
-@app.get("/users/{item_id}", description="Get item by ID")
-def get_item(item_id: int):
-    return repo[item_id]
 
-@app.patch("/users/{item_id}", description="Update an item")
-def update_item(item_id: int, values: dict):
-    repo[item_id] = values
+@app.on_event("startup")
+async def startup():
+    print("Connectando...")
+    if conn.is_closed():
+        conn.connect()
 
-@app.delete("/users/{item_id}", description="Delete an item")
-def delete_item(item_id: int):
-    del repo[item_id]
+
+@app.on_event("shutdown")
+async def shutdown():
+    print("Fechando...")
+    if not conn.is_closed():
+        conn.close()    
+
+
+def main(req: func.HttpRequest, context: func.Context) -> func.HttpResponse:
+    return func.AsgiMiddleware(app).handle(req, context)

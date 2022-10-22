@@ -9,12 +9,12 @@ class Saida(BaseModel):
     id = PrimaryKeyField(null=False)
     nome = CharField(max_length=45)
     valor = FloatField()
-    id_tipo_saida = ForeignKeyField(TipoSaida, backref='saidas')
-    id_usuario = ForeignKeyField(Usuario, backref='saidas')
+    tipo_saida = ForeignKeyField(TipoSaida,backref="saidas", lazy_load=False)
+    usuario = ForeignKeyField(Usuario,backref="saidas", lazy_load=False)
     descricao= CharField(max_length=100, null=True)
     data_criacao = DateTimeField(default=datetime.now())
     data_alteracao = DateTimeField(default=datetime.now())
-    ativo = BitField(default=1)
+    ativo = BooleanField(default=True)
 
     class Meta:
         db_table = 'saida'
@@ -39,8 +39,8 @@ async def cria_saida(nome: str,
 
     objeto_saida = Saida(
         valor=valor,
-        id_tipo_saida = id_tipo_saida,
-        id_usuario = id_usuario,
+        tipo_saida = id_tipo_saida,
+        usuario = id_usuario,
         nome=nome,
         descricao=descricao
     )
@@ -58,7 +58,7 @@ async def atualiza_saida(id: int,
     itens_to_update["nome"] = nome
     itens_to_update["descricao"] = descricao
     itens_to_update["valor"] = valor
-    itens_to_update["id_tipo_saida"] = id_tipo_saida
+    itens_to_update["tipo_saida"] = id_tipo_saida
     for key, value in itens_to_update.items():
         if(value == None):
             del itens_to_update[key]
@@ -71,16 +71,16 @@ async def atualiza_saida(id: int,
          raise ValueError("Saida não encontrada.")
     return old     
 
-def busca_saida(id: int):
-    return Saida.filter(Saida.id_saida == id).first()
+async def busca_saida(id: int):
+    return Saida.filter(Saida.id == id).first()
 
-def lista_saidas(skip: int = 0, limit: int = 100)->list:
+async def lista_saidas(skip: int = 0, limit: int = 100)->list:
     return list(Saida.select().offset(skip).limit(limit))
 
-def delete_saida(id: int):
+async def delete_saida(id: int):
     """
         Método de exclusão de saida
 
         - **id**: o id da saida. Número
     """
-    return Saida.update({"ativo":0}).where(Saida.id==id).execute()
+    return Saida.update({"ativo":False}).where(Saida.id==id).execute()

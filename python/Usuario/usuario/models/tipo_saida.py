@@ -73,5 +73,5 @@ async def delete_tipo_saida(id: int):
 
         - **id**: o id do tipo de saida. Número
     """
-    return TipoSaida.update({"ativo":-1}).where(TipoSaida.id==id).execute()
+    return TipoSaida.update({"ativo":int(False)}).where(TipoSaida.id==id).execute()
   

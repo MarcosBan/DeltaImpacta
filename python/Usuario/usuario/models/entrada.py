@@ -9,12 +9,12 @@ class Entrada(BaseModel):
     id = PrimaryKeyField(null=False)
     nome = CharField(max_length=45)
     valor = FloatField()
-    id_tipo_entrada = ForeignKeyField(TipoEntrada, backref='entradas')
-    id_usuario = ForeignKeyField(Usuario, backref='entradas')
+    tipo_entrada = ForeignKeyField(TipoEntrada,backref="entradas", lazy_load=False)
+    usuario = ForeignKeyField(Usuario,backref="entradas", lazy_load=False)
     descricao= CharField(max_length=100, null=True)
     data_criacao = DateTimeField(default=datetime.now())
     data_alteracao = DateTimeField(default=datetime.now())
-    ativo = BitField(default=1)
+    ativo = BooleanField(default=True)
 
     class Meta:
         db_table = 'entrada'
@@ -39,8 +39,8 @@ async def cria_entrada(nome: str,
 
     objeto_entrada = Entrada(
         valor=valor,
-        id_tipo_entrada = id_tipo_entrada,
-        id_usuario = id_usuario,
+        tipo_entrada = id_tipo_entrada,
+        usuario = id_usuario,
         nome=nome,
         descricao=descricao
     )
@@ -71,16 +71,16 @@ async def atualiza_entrada(id: int,
          raise ValueError("Entrada não encontrada.")
     return old     
 
-def busca_entrada(id: int):
-    return Entrada.filter(Entrada.id_entrada == id).first()
+async def busca_entrada(id: int):
+    return Entrada.filter(Entrada.id == id).first()
 
-def lista_entradas(skip: int = 0, limit: int = 100)->list:
+async def lista_entradas(skip: int = 0, limit: int = 100)->list:
     return list(Entrada.select().offset(skip).limit(limit))
 
-def delete_entrada(id: int):
+async def delete_entrada(id: int):
     """
         Método de exclusão de entrada
 
         - **id**: o id da entrada. Número
     """
-    return Entrada.update({"ativo":0}).where(Entrada.id==id).execute()
+    return Entrada.update({"ativo":False}).where(Entrada.id==id).execute()

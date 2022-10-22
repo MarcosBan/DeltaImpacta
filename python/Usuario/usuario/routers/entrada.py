@@ -1,14 +1,15 @@
 """
-    Métodos relacionados à rota de Entradaa.
+    Métodos de rota da entidade Entrada
 """
-from typing import Any, List
+from datetime import datetime
+from typing import Any, Union
 
 import peewee
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Response
+
+from ..models.entrada import atualiza_entrada, busca_entrada,cria_entrada, lista_entradas,delete_entrada
 from pydantic import BaseModel
 from pydantic.utils import GetterDict
-
-from ..models.entrada import busca_entrada, cria_entrada, lista_entradas, atualiza_entrada
 
 router_entradas = APIRouter(
     prefix="/entradas",
@@ -21,32 +22,78 @@ class PeeweeGetterDict(GetterDict):
     """
     def get(self, key: Any, default: Any = None):
         """
-            de-para de model para dtos
+            De-Para
 
-            - **key**: The object's key.
+            - **key**: a chave do objeto.
         """
         res = getattr(self._obj, key, default)
         if isinstance(res, peewee.ModelSelect):
             return list(res)
         return res
 
-class EntradaInModel(BaseModel):
+class EntradaModeloEntrada(BaseModel):
     """
-        Model para entrada de dados de Entrada.
+        Modelo de entrada de dados de Entrada
     """
-    id:int=0
     nome:str
-    descricao:str=""
+    descricao:Union[str,None]=None
     valor:float
-    id_tipo_entrada:int
-    id_usuario:int
+    tipo_entrada:int
+    usuario:int
+     
+    class Config:
+        """
+            Necessary config data.
+        """ 
+        schema_extra = {
+            "example": {
+                "nome": "Entrada Teste",
+                "descricao": "Descrição da entrada teste",
+                "valor": 150.00,
+                "tipo_entrada":5,
+                "usuario":2
+            }
+        }
 
-class EntradaOutModel(EntradaInModel):
+
+class EntradaModeloEntradaUpdate(BaseModel):
     """
-        Model para retorno de dados de Entrada.
+        Modelo de entrada de dados de Entrada
     """
     id:int
-    tipo_entrada:str
+    nome:Union[None,str]=None
+    descricao:Union[str,None]=None
+    valor:Union[None,float]=None
+    tipo_entrada:Union[None,int]=None
+    usuario:Union[None,int]=None
+     
+    class Config:
+        """
+            Necessary config data.
+        """ 
+        schema_extra = {
+            "example": {
+                "nome": "Entrada Teste",
+                "descricao": "Descrição da entrada teste",
+                "valor": 150.00,
+                "tipo_entrada":5,
+                "usuario":2
+            }
+        }
+
+class EntradaModeloSaida(BaseModel):
+    """
+        Modelo de saída de dados de Entrada
+    """
+    id:int
+    nome:str
+    descricao:str
+    valor:float
+    tipo_entrada:object
+    usuario: object
+    data_criacao: datetime
+    data_alteracao: datetime
+    ativo: bool
 
     class Config:
         """
@@ -56,80 +103,72 @@ class EntradaOutModel(EntradaInModel):
         getter_dict = PeeweeGetterDict
 
 
-@router_entradas.get("/", 
-                        response_model=List[EntradaOutModel], 
-                        summary="Lista todas as entradas",
-                        description="Lista todas as entradas")
-def lista() -> list[EntradaOutModel]:
+@router_entradas.get("/", response_model=list[EntradaModeloSaida], 
+                          summary="Lista de entradas",
+                          description="Retorna todas as entradas")
+async def lista()->list[EntradaModeloSaida]:
     """
-        Lista todas as entradas
+        Retorna todas os entradas
     """
-    return lista_entradas()
+    
+    try: 
+        return await lista_entradas()
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
-
-@router_entradas.get("/view/{id}", 
-                    response_model=EntradaOutModel,
-                    summary="Busca uma única entrada.")
-async def busca(id: int) -> EntradaOutModel:
+@router_entradas.get("/view/{id}", response_model=EntradaModeloSaida, 
+                        summary="Retorna uma única entrada")
+async def busca(id: int) -> EntradaModeloSaida:
     """
-        Busca uma única entrada.
+        Consulta todos os dados de entrada
 
-        - **id**: o id da entrada. Número.
+        - **id**: o id do entrada a ser consultado.
     """
-    entrada = busca_entrada(id=id)
+    entrada = await busca_entrada(id=id)
     if entrada is None:
-        raise HTTPException(status_code=404, detail="Entrada not found")
+        raise HTTPException(status_code=404, detail="Entrada não encontrada.")
 
     return entrada
 
-
-@router_entradas.post("/",  
-                        response_model=EntradaOutModel, 
-                        summary="Cria uma nova entrada.")
-async def cria(model: EntradaInModel)-> EntradaOutModel:
+@router_entradas.post("/", response_model=EntradaModeloSaida, 
+                            summary="Cria uma nova entrada")
+async def cria(modelo: EntradaModeloEntrada)-> EntradaModeloSaida:
     """
-        Cria uma nova entrada.
+        Criação de entrada.
     """
     try: 
-        return await cria_entrada(
-                        id_usuario=model.id_usuario,
-                        nome = model.nome, 
-                        valor=model.valor,
-                        descricao=model.descricao,
-                        id_tipo_entrada=model.id_tipo_entrada)
-        
+        return await cria_entrada(modelo.nome,modelo.valor, modelo.tipo_entrada,
+        modelo.usuario, modelo.descricao)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-@router_entradas.put("/", response_model=EntradaOutModel, 
-                        summary="Atualiza detalhes da entrada.")
-async def update(model: EntradaInModel)-> EntradaOutModel:
+@router_entradas.put("/", response_model=EntradaModeloSaida, 
+                          summary="Atualiza um entrada")
+async def atualiza(modelo: EntradaModeloEntradaUpdate)-> EntradaModeloSaida:
     """
-        Atualiza detalhes da entrada.
+        Atualização de entrada
     """
     try: 
-        return await atualiza_entrada(id = model.id, 
-                        id_usuario=model.id_usuario,
-                        nome = model.nome, 
-                        valor=model.valor,
-                        descricao=model.descricao,
-                        id_tipo_entrada=model.id_tipo_entrada)
+        return await atualiza_entrada(modelo.id, modelo.usuario, modelo.nome,
+        modelo.valor, modelo.descricao, modelo.tipo_entrada) 
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
+@router_entradas.delete(
+    "/remove/{id}",
+    summary="Exclui uma entrada",
+    response_class=Response,
+    responses={
+        200: {"description": "Entrada excluída com sucesso"},
+        404: {"description": "Entrada não encontrada"},
+    },
+)
 
-# @router_entradas.delete(
-#     "/remove/{id}",
-#     summary="Delete an individual entrada",
-#     response_class=Response,
-#     responses={
-#         200: {"description": "Entrada successfully deleted"},
-#         404: {"description": "Entrada not found"},
-#     },
-# )
-
-# async def remove_entrada(id: int):
-#     del_entrada = delete_entrada(id)
-#     if del_entrada is None:
-#         return Response(status_code=404)
-#     return Response(status_code=200)
+async def exclui(id: int):
+    """
+        Exclusão de entrada
+    """
+    del_entrada = delete_entrada(id)
+    if del_entrada is None or del_entrada != 1:
+        return Response(status_code=404)
+    return Response(status_code=200)

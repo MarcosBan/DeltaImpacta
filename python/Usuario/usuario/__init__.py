@@ -15,8 +15,8 @@ async def root():
 app.include_router(usuario.router_usuarios)
 app.include_router(tipo_entrada.router_tipo_entradas)
 app.include_router(tipo_saida.router_tipo_saidas)
-# app.include_router(entrada.router_entradas)
-# app.include_router(saida.router_saidas)
+app.include_router(entrada.router_entradas)
+app.include_router(saida.router_saidas)
 
 
 @app.on_event("startup")

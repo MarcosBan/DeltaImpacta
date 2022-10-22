@@ -1,19 +1,17 @@
 """
     Métodos de rota da entidade TipoSaida
 """
-from datetime import date, datetime
-from sqlite3 import Timestamp
+from datetime import datetime
 from typing import Any, List
-
 import peewee
-from fastapi import APIRouter, HTTPException, Response, Request
-from ..models.tipo_saida import TipoSaida, busca_tipo_saida, cria_tipo_saida, delete_tipo_saida, lista_tipo_saidas
+from fastapi import APIRouter, HTTPException, Response
+from ..models.tipo_saida import busca_tipo_saida, cria_tipo_saida, delete_tipo_saida, lista_tipo_saidas
 from pydantic import BaseModel
 from pydantic.utils import GetterDict
 
 router_tipo_saidas = APIRouter(
-    prefix="/saidas",
-    tags=["saidas"]
+    prefix="/tiposaidas",
+    tags=["tipo de saidas"]
 )
 
 class PeeweeGetterDict(GetterDict):
@@ -31,18 +29,32 @@ class PeeweeGetterDict(GetterDict):
             return list(res)
         return res
 
-class TipoSaidaModeloSaida(BaseModel):
+class TipoSaidaModeloEntrada(BaseModel):
     """
-        Modelo de saida de dados de TipoSaida.
+        Modelo de entrada de dados de TipoSaida.
     """
     nome:str
-    id_usuario:int
+    descricao:str
+    
+    class Config:
+        """
+            Necessary config data.
+        """ 
+        schema_extra = {
+            "example": {
+                "nome": "Nome do tipo de saida",
+                "descricao": "Descrição detalhada do tipo de saida."
+            }
+        }
 
-class TipoSaidaModeloSaida(TipoSaidaModeloSaida):
+class TipoSaidaModeloSaida(TipoSaidaModeloEntrada):
     """
         Modelo de retorno de dados de TipoSaida
     """
     id:int
+    data_criacao:datetime
+    data_alteracao:datetime
+    ativo:bool
     
     class Config:
         """
@@ -53,12 +65,12 @@ class TipoSaidaModeloSaida(TipoSaidaModeloSaida):
 
 
 @router_tipo_saidas.get("/", response_model=List[TipoSaidaModeloSaida], summary="List of saidas",
-                     description="Returns all saidas")
-def lista() -> list[TipoSaida]:
+                     description="Retorna todos os tipos de saidas")
+async def lista(inclui_inativos:bool=False) -> list[TipoSaidaModeloSaida]:
     """
         Lista todos os tipos de saida
     """
-    return lista_tipo_saidas()
+    return await lista_tipo_saidas(inclui_inativos)
 
 
 @router_tipo_saidas.get("/view/{id}"
@@ -70,7 +82,7 @@ async def busca(id: int) -> TipoSaidaModeloSaida:
 
         - **id**: o id do tipo de saida. Número
     """
-    saida = busca_tipo_saida(id=id)
+    saida = await busca_tipo_saida(id=id)
     if saida is None:
         raise HTTPException(status_code=404, detail="TipoSaida não encontrado.")
 
@@ -80,12 +92,12 @@ async def busca(id: int) -> TipoSaidaModeloSaida:
 @router_tipo_saidas.post("/", 
                         response_model=TipoSaidaModeloSaida, 
                         summary="Cria um novo tipo de saida.")
-async def cria(model: TipoSaidaModeloSaida)-> TipoSaidaModeloSaida:
+async def cria(model: TipoSaidaModeloEntrada)-> TipoSaidaModeloSaida:
     """
         Cria um novo tipo de saida.
     """
     try: 
-        return await cria_tipo_saida(nome=model.nome)
+        return await cria_tipo_saida(nome=model.nome, descricao=model.descricao)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
@@ -95,8 +107,8 @@ async def cria(model: TipoSaidaModeloSaida)-> TipoSaidaModeloSaida:
     summary="Deleta um tipo de saida.",
     response_class=Response,
     responses={
-        200: {"description": "TipoSaida successfully deleted"},
-        404: {"description": "TipoSaida not found"},
+        200: {"description": "TipoSaida excluído com sucesso."},
+        404: {"description": "TipoSaida não encontrado."},
     },
 )
 async def remove(id: int):
@@ -105,7 +117,7 @@ async def remove(id: int):
 
         - **id**: o id do tipo de saida. Número
     """
-    delete = delete_tipo_saida(id)
+    delete = await delete_tipo_saida(id)
     if delete is None or delete == 0:
         return Response(status_code=404)
     return Response(status_code=200)

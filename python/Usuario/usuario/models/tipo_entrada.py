@@ -73,5 +73,6 @@ async def delete_tipo_entrada(id: int):
 
         - **id**: o id do tipo de entrada. Número
     """
-    return TipoEntrada.update({"ativo":-1}).where(TipoEntrada.id==id).execute()
+    return TipoEntrada.update({"ativo":int(False)}).where(TipoEntrada.id==id).execute()
   
+    

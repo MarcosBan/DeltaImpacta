@@ -92,22 +92,24 @@ function isNewTransaction() {
 
 function findTransactionByUid(uid) {
     showLoading();
-    
-    firebase.firestore()
-        .collection("transactions")
-        .doc(uid)
-        .get()
-        .then(doc => {
+
+    transactionService.findByUid(uid)
+        .then(transaction => {
             hideLoading();
-            if (doc.exists) {
-                fillTransactionScreen(doc.data());
+            if (transaction) {
+                fillTransactionScreen(transaction);
                 toggleSaveButtonDisable();
             } else {
                 alert("Registro não encontrado")
                 window.history.go(-2); return false;
             }
         })
-}
+        .catch(() => {
+            hideLoading();
+            alert("Erro ao recuperar documento");
+            window.location.href = "../home/home.html";
+        });
+    }
 
 function saveTransaction() {
     showLoading();
@@ -120,10 +122,8 @@ function saveTransaction() {
 }
 
 function save(transaction) {
-    showLoading
-    firebase.firestore()
-        .collection('transactions')
-        .add(transaction)
+    showLoading();
+    transactionService.save(transaction)
         .then(() => {
             hideLoading();
             window.history.go(-1); return false;
@@ -135,10 +135,7 @@ function save(transaction) {
 
 function update(transaction) {
     showLoading();
-    firebase.firestore()
-        .collection('transactions')
-        .doc(getTransactionUid())
-        .update(transaction)
+    transactionService.update(transaction)
         .then(() => {
             hideLoading();
             window.history.go(-1); return false;

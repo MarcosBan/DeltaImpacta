@@ -42,17 +42,9 @@ firebase.auth().onAuthStateChanged(user => {
 })
 
 function findTransactions(user) {
-    showLoading();
-    firebase.firestore()
-    .collection('transactions')
-    .where('user.uid', '==', user.uid)
-    .orderBy('date', 'desc')
-    .get()
-    .then(snapshot => {
-        hideLoading()
-        const transactions = snapshot.docs.map(doc => ({
-            ...doc.data(),
-            uid: doc.id}));
+    transactionService.findByUser(user)
+    .then(transactions => {
+        hideLoading();
         addTransactionToScreen(transactions);
     }).catch(error => {
         hideLoading();
@@ -124,10 +116,7 @@ function askRemoveTransaction(transaction) {
 
 function removeTransaction(transaction) {
     showLoading();
-    firebase.firestore()
-        .collection("transactions")
-        .doc(transaction.uid)
-        .delete()
+    transactionService.remove(transaction)
         .then(() => {
             hideLoading();
             document.getElementById(transaction.uid).remove();

@@ -1,23 +1,14 @@
 const transactionService = {
-    findByUser: user => {
-        return firebase.firestore()
-        .collection('transactions')
-        .where('user.uid', '==', user.uid)
-        .orderBy('date', 'desc')
-        .get()
-        .then(snapshot => {
-            return snapshot.docs.map(doc => ({
-                ...doc.data(),
-                uid: doc.id}));
+    findByUser: () => {
+        return callApi({
+            method: "GET",
+            endpoint: "http://localhost:3000/transactions"
         })
     },
     findByUid: uid => {
-        return firebase.firestore()
-        .collection("transactions")
-        .doc(uid)
-        .get()
-        .then(doc => {
-            return doc.data();
+        return callApi({
+            method: "GET",
+            endpoint: `http://localhost:3000/transactions/${uid}`
         })
     },
     remove: transaction => {
@@ -37,4 +28,25 @@ const transactionService = {
         .doc(getTransactionUid())
         .update(transaction)
     }
+}
+
+function callApi({method, endpoint}) {
+    return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+
+        xhr.open(method, endpoint, true)
+
+        xhr.onreadystatechange = function() {
+            if (this.readyState == 4) {
+            const json = JSON.parse(this.responseText);
+            if (this.status != 200) {
+                reject(json);
+            } else {
+                resolve(json);
+            }
+        }
+    };
+
+        xhr.send();
+    })
 }

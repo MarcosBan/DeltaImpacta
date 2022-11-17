@@ -57,55 +57,58 @@ function addTransactionToScreen(transactions) {
     const orderedList = document.getElementById('transactions');
 
     transactions.forEach(transaction => {
-        const li = document.createElement('li')
+        const li = createTransactionListItem(transaction);
+        li.appendChild(createDeleteButton(transaction));
+        li.appendChild(createEditButton(transaction));
+        li.appendChild(createParagraph(formatDate(transaction.date)));
+        li.appendChild(createParagraph(formatMoney(transaction.money)));
+        li.appendChild(createParagraph(transaction.type));
+        
+        if (transaction.description) {
+            li.appendChild(createParagraph(transaction.description));
+        }
+        orderedList.appendChild(li);
+    });
+}
+
+function createTransactionListItem(transaction) {
+    const li = document.createElement('li')
         li.classList.add(transaction.type);
         li.id = transaction.uid;
         li.addEventListener('click', () => {
             window.location.href="../transaction/transaction.html?uid=" + transaction.uid;
         })
+        return li;
+}
 
-        const deleteButton = document.createElement("button");
+function createDeleteButton(transaction) {
+    const deleteButton = document.createElement("button");
+        deleteButton.innerHTML = "Excluir";
         deleteButton.classList.add("outline", "danger");
         deleteButton.addEventListener("click", event => {
             event.stopPropagation();
             askRemoveTransaction(transaction);
         })
-        deleteButton.innerHTML = "Excluir";
+        return deleteButton;
+}
 
-        li.appendChild(deleteButton)
-
-        const editButton = document.createElement("button");
+function createEditButton(transaction) {
+    const editButton = document.createElement("button");
+        editButton.innerHTML = "Editar";
         editButton.classList.add("outline", "edit");
         editButton.addEventListener("click", event => {
             event.stopPropagation();
             window.location.href="../transaction/transaction.html?uid=" + transaction.uid;
         })
-        editButton.innerHTML = "Editar";
-
-        li.appendChild(editButton)
-        
-        const date = document.createElement('p');
-        date.innerHTML = formatDate(transaction.date);
-        li.appendChild(date);
-
-        const money = document.createElement('p');
-        money.innerHTML = formatMoney(transaction.money);
-        li.appendChild(money);
-
-        const type = document.createElement('p');
-        type.innerHTML = transaction.transactionType;
-        li.appendChild(type);
-
-        if (transaction.description) {
-            const description = document.createElement('p');
-            description.innerHTML = transaction.description;
-            li.appendChild(description);
-        }
-
-        orderedList.appendChild(li);
-        
-    });
+        return editButton;        
 }
+
+function createParagraph(value) {
+    const element = document.createElement('p');
+    element.innerHTML = value;
+    return element;
+    }
+
 
 function askRemoveTransaction(transaction) {
     const shouldRemove = confirm('Deseja remover a transação?');

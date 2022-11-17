@@ -23,18 +23,20 @@ const transactionService = {
         .add(transaction)
     },
     update: transaction => {
-        return firebase.firestore()
-        .collection('transactions')
-        .doc(getTransactionUid())
-        .update(transaction)
+        return callApi({
+            method: "PATCH",
+            endpoint: `http://localhost:3000/transactions/${transaction.uid}`,
+            params: transaction
+        })
     }
 }
 
-function callApi({method, endpoint}) {
+function callApi({method, endpoint, params}) {
     return new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
 
         xhr.open(method, endpoint, true)
+        xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
 
         xhr.onreadystatechange = function() {
             if (this.readyState == 4) {
@@ -47,6 +49,6 @@ function callApi({method, endpoint}) {
         }
     };
 
-        xhr.send();
+        xhr.send(JSON.stringify(params));
     })
 }

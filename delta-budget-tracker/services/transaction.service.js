@@ -11,16 +11,18 @@ const transactionService = {
             endpoint: `http://localhost:3000/transactions/${uid}`
         })
     },
-    remove: transaction => {
-        return firebase.firestore()
-        .collection("transactions")
-        .doc(transaction.uid)
-        .delete();
+    remove: uid => {
+        return callApi({
+            method: "DELETE",
+            endpoint: `http://localhost:3000/transactions/${uid}`
+        })
     },
     save: transaction => {
-        return firebase.firestore()
-        .collection('transactions')
-        .add(transaction)
+        return callApi({
+            method: "POST",
+            endpoint: "http://localhost:3000/transactions",
+            params: transaction
+        })
     },
     update: transaction => {
         return callApi({

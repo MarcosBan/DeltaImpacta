@@ -1,0 +1,33 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+:root {
+    --primary-color: #606DE3;
+}
+
+header {
+    background-color: var(--primary-color);
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+    box-shadow: 0 1px 2px #CCC;
+    color: #FFFFFF;
+}
+
+main {
+    flex-grow: 1;
+    background-color: rgb(245, 245, 245);
+}
+
+footer {
+    background-color: violet;
+}

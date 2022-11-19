@@ -1,18 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
+  <link rel="stylesheet" href="../../sidebar.css">
+  <link rel="stylesheet" href="main.css">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Delta</title>
-  <style>
-    tr, td, tabela {
-      border: 1px black solid;
-    }
-  </style>
+  <title>Transações - Delta Budget Tracker</title>
 </head>
 <body>
-  <table id="tabela"></table>
-  <script src="./main.js"></script>
+  <!-- sidebar -->
+ <div class="navigation sidebar-open">
+    <div class="menuToggle"></div>
+    <ul>
+        <li class="list" style="--clr:#606DE3">
+            <a href="#" onclick="delayed_home()">
+                <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                <span class="text">Home</span>
+            </a>
+        </li>
+        <li class="list" style="--clr:#606DE3">
+            <a href="#" onclick="delayed_income()">
+                <span class="icon"><ion-icon name="caret-back-circle-outline"></ion-icon></span>
+                <span class="text">Entradas</span>
+            </a>
+        </li>
+        <li class="list" style="--clr:#606DE3">
+            <a href="#" onclick="delayed_outcome()">
+                <span class="icon"><ion-icon name="caret-forward-circle-outline"></ion-icon></span>
+                <span class="text">Despesas</span>
+            </a>
+        </li>
+        <li class="list " style="--clr:#606DE3">
+            <a href="#" onclick="delayed_expenses()">
+                <span class="icon"><ion-icon name="wallet-outline"></ion-icon></span>
+                <span class="text">Transações</span>
+            </a>
+        </li>
+        <li class="list" style="--clr:#606DE3">
+            <a href="#">
+                <span class="icon"><ion-icon name="person-circle-outline"></ion-icon></span>
+                <span class="text">Usuário</span>
+            </a>
+        </li>
+        <li class="list" style="--clr:#606DE3">
+            <a href="#" onclick="delayed_logout()">
+                <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
+                <span class="text">Sair</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<!-- Page -->
+  <header>
+    <h1>Todas as Transações</h1>
+  </header>
+  <main>
+    main
+  </main>
+  <footer>
+    footer
+  </footer>
+
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+
+  <script src="../../loading.js"></script>
+  <script src="../../services/transaction.service.js"></script>
+  <script src="../../sidebar.js"></script>
+
 </body>
 </html>

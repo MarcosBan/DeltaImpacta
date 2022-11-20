@@ -39,7 +39,7 @@ function insertTableTD(props, set_classe) {
 
 //Recupera nome do tipo da transação por id
 function getNameFromID(transactionTypeID, endpoint) {
-    let data = fazGet("https://apibudgettracker.azurewebsites.net/" + endpoint)
+    let data = fazGet("http://localhost:3000/" + endpoint)
     let transactionType = JSON.parse(data);
     let nome = 'vazio'
         
@@ -78,13 +78,13 @@ function addTableRows(transactions, type, endpoint) {
 
 
 //endpoints
-let data_entradas = fazGet("https://apibudgettracker.azurewebsites.net/entradas")
+let data_entradas = fazGet("http://localhost:3000/entradas")
 let entradas = JSON.parse(data_entradas);
 
-let data_saidas = fazGet("https://apibudgettracker.azurewebsites.net/saidas")
+let data_saidas = fazGet("http://localhost:3000/saidas")
 let saidas = JSON.parse(data_saidas);
 
-let data_tiposaidas = fazGet("https://apibudgettracker.azurewebsites.net/tiposaidas")
+let data_tiposaidas = fazGet("http://localhost:3000/tiposaidas")
 let tipo_saidas = JSON.parse(data_tiposaidas);
 
 addTableRows(entradas, 'tipo_entrada_id','tipoentradas')
@@ -112,7 +112,7 @@ function criaLinha(element) {
 }
 
 function main() {
-    let data = fazGet("https://apibudgettracker.azurewebsites.net/entradas")
+    let data = fazGet("http://localhost:3000/entradas")
     let entradas = JSON.parse(data);
     let tabela = document.getElementById("tabela")
 

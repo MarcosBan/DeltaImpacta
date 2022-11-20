@@ -13,6 +13,9 @@ body {
 
 :root {
     --primary-color: #606DE3;
+    --secundary-color: white;
+    --shadow-color: #CCC;
+    --text-color: gray;
 }
 
 header {
@@ -33,11 +36,16 @@ main {
     width: 90%;
     margin: 5vh auto;
     padding: 50px;
-    box-shadow: 2px 2px 6px;
+    box-shadow: 2px 2px 6px var(--shadow-color);
     gap: 20px;
 }
 
 footer {
-    background-color: violet;
+    color: var(--text-color);
+    width: 100;
+    text-align: center;
+    font-weight: 200;
+    font-style: italic;
+    padding: 20px;
+    font-size: small;
 }
-

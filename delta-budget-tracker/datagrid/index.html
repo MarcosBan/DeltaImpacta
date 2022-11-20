@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <link rel="stylesheet" href="../../sidebar.css">
+<link rel="stylesheet" href="./css/main.css">
+<link rel="stylesheet" href="./css/button.css">
+<link rel="stylesheet" href="./css/records.css">
+<link rel="stylesheet" href="./css/modal.css">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,700;1,200;1,800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="main.css">
-<link rel="stylesheet" href="button.css">
 
 <head>
   <meta charset="UTF-8">
@@ -74,53 +77,57 @@
     <h1 class="header-title">Todas as Transações</h1>
   </header>
   <main>
-    <button type="button" class="button purple">Adicionar</button>
-    <table>
+    <button type="button" class="button purple" id="adicionarTransacao">Adicionar</button>
+    <table class="records">
       <thead>
         <tr>
           <th>Nome</th>
           <th>Descrição</th>
           <th>Valor</th>
-          <th>Tipo de Entrada</th>
-          <th>Data Criação</th>
-          <th>Data Alteração</th>
+          <th>Tipo de Transação</th>
+          <th>Data</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>Pagamento</td>
-          <td>Salário da empresa A</td>
-          <td>3000.0</td>
-          <td>Adiantamento</td>
-          <td>2022-10-22</td>
-          <td>2022-10-22</td>
-          <td>
-            <button type="button" class="button green">editar</button>
-            <button type="button" class="button red">excluir</button>
-          </td>          
-        </tr>
-        <tr>
-          <td>Pagamento</td>
-          <td>Salário da empresa B</td>
-          <td>5000.0</td>
-          <td>Salário Mensal</td>
-          <td>2022-15-22</td>
-          <td>2022-15-22</td>
-          <td>
-            <button type="button" class="button green">editar</button>
-            <button type="button" class="button red">excluir</button>
-          </td>
-      </tbody>
+      <tbody id="table-body"></tbody>
     </table>
+    <div class="modal" id="modal">
+      <div class="modal-content">
+        <header class="modal-header">
+          <h2>Nova Transação</h2>
+          <span class="modal-close" id="modalClose">&#10006;</span>
+        </header>
+        <form class="modal-form">
+          <input type="text" class="modal-field" placeholder=" Nome">
+          <input type="text" class="modal-field" placeholder=" Descrição">
+          <input type="type=" number" min="1" step="any" class="modal-field" placeholder=" Valor">
+          <select class="modal-field" placeholder="Tipo de Entrada">
+            <option value="Salário Mensal">Selecione o Tipo de Transação</option>
+            <option value="Salário Mensal">Salário Mensal</option>
+            <option value="Adiantamento">Adiantamento</option>
+            <option value="Crédito">Crédito</option>
+            <option value="Mercado">Mercado</option>
+            <option value="Educação">Educação</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Cartão de Crédito">Cartão de Crédito</option>
+            <option value="Contas">Contas</option>
+          </select>
+          <input type="date" class="modal-field" placeholder="Data">
+        </form>
+        <footer class="modal-footer">
+          <button class="button green">Salvar</button>
+          <button class="button purple" id="modalCancel">Cancelar</button>
+        </footer>
+      </div>
+    </div>
   </main>
   <footer>
-    footer
+    Copyright &copy; Delta Team
   </footer>
 
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
-
+  <script src="./main.js"></script>
   <script src="../../loading.js"></script>
   <script src="../../services/transaction.service.js"></script>
   <script src="../../sidebar.js"></script>

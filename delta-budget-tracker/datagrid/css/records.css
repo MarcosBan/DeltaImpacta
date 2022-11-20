@@ -1,0 +1,38 @@
+.records {
+    width: 100%;
+    user-select: none;
+    text-align: left;
+
+}
+
+.records th {
+    height: 50px;
+    background: var(--primary-color);
+    color: white;
+    padding: 20px;
+    font-size: 1.2rem;
+}
+
+.records td {
+    height: 50px;
+    padding-left: 20px;
+    box-shadow: 0 .5px 0 black;
+}
+
+.tiposaidas {
+    border-style: none;
+    border-left: 10px solid red;
+}
+
+.tipoentradas {
+    border-left: 10px solid rgb(0, 255, 0);
+}
+
+.records th:last-child,
+.recors td:last-child {
+    padding: 20;
+    }
+
+.records.tr:hover {
+    background-color: var(--secundary-color);
+}

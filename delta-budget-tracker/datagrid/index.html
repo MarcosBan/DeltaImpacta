@@ -9,6 +9,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,700;1,200;1,800&display=swap" rel="stylesheet">
+<link rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
 <head>
   <meta charset="UTF-8">
@@ -97,24 +99,28 @@
           <span class="modal-close" id="modalClose">&#10006;</span>
         </header>
         <form class="modal-form">
-          <input type="text" class="modal-field" placeholder=" Nome">
-          <input type="text" class="modal-field" placeholder=" Descrição">
-          <input type="type=" number" min="1" step="any" class="modal-field" placeholder=" Valor">
-          <select class="modal-field" placeholder="Tipo de Entrada">
-            <option value="Salário Mensal">Selecione o Tipo de Transação</option>
-            <option value="Salário Mensal">Salário Mensal</option>
-            <option value="Adiantamento">Adiantamento</option>
-            <option value="Crédito">Crédito</option>
-            <option value="Mercado">Mercado</option>
-            <option value="Educação">Educação</option>
-            <option value="Lazer">Lazer</option>
-            <option value="Cartão de Crédito">Cartão de Crédito</option>
-            <option value="Contas">Contas</option>
+          <select id="tipo_transacao" class="modal-field" placeholder="Tipo de Transação">
+            <option id="tipoentradas">Entrada</option>
+            <option id="tiposaidas">Saída</option>
           </select>
-          <input type="date" class="modal-field" placeholder="Data">
+          <input id="nome" type="text" class="modal-field" placeholder=" Nome">
+          <input id="descricao" type="text" class="modal-field" placeholder=" Descrição">
+          <input id="valor" type="number" min="1" step="any" class="modal-field" placeholder=" Valor">
+          <select id="tipo_entrada" class="modal-field" placeholder="Tipo de Entrada">
+            <option id="1" value="">Selecione o Tipo de Transação</option>
+            <option id="5" value="Salário Mensal">Salário Mensal</option>
+            <option id="2" value="Adiantamento">Adiantamento</option>
+            <option id="3" value="Crédito">Crédito</option>
+            <option id="2" value="Mercado">Mercado</option>
+            <option id="3" value="Educação">Educação</option>
+            <option id="4" value="Lazer">Lazer</option>
+            <option id="5" value="Cartão de Crédito">Cartão de Crédito</option>
+            <option id="1" value="Contas">Contas</option>
+          </select>
+          <input id="data" type="date" class="modal-field" placeholder="Data">
         </form>
         <footer class="modal-footer">
-          <button class="button green">Salvar</button>
+          <button onclick="saveTransaction()" id="save-button" class="button green">Salvar</button>
           <button class="button purple" id="modalCancel">Cancelar</button>
         </footer>
       </div>

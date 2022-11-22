@@ -1,11 +1,11 @@
-//Open Modal
+//Abre Modal
 const openModal = () => document.getElementById('modal')
     .classList.add('active')
 
 document.getElementById('adicionarTransacao')
     .addEventListener('click', openModal)
 
-//Close Modal
+//Fecha Modal
 const closeModal = () => document.getElementById('modal')
     .classList.remove('active')
 
@@ -14,6 +14,10 @@ document.getElementById('modalClose')
 
 document.getElementById('modalCancel')
     .addEventListener('click', closeModal)
+
+
+//Escuta evento odo botão editar
+
 
 
 //Cria linha da tabela
@@ -25,15 +29,28 @@ function createTableTR(transaction) {
 }
 
 //Insere os dados na tabela
-function insertTableTD(props, set_classe) {
+function insertTableTD(props, set_class) {
     const td = document.createElement('td')
 
-    if(set_classe) {
+    if(set_class) {
         td.innerHTML = props
-        td.setAttribute('class', set_classe)
+        td.setAttribute('class', set_class)
     } else {
         td.innerHTML = props
     }
+    return td
+}
+
+//Insere os dados na última coluna, contendo os botões editar e excluir
+function insertLastTableTD(props) {
+    const td = document.createElement('td')
+    const delete_button = deleteButton()
+    const edit_button = editButton()
+
+    td.innerHTML = formatDate(props)
+    td.appendChild(delete_button)
+    td.appendChild(edit_button)    
+
     return td
 }
 
@@ -60,6 +77,28 @@ function formatDate(date) {
     return new Date(date).toLocaleDateString('pt-br');
 }
 
+//Cria botão Excluir
+function deleteButton() {
+    const delete_button = document.createElement('button')
+    delete_button.setAttribute('type', 'button')
+    delete_button.setAttribute('id', 'delete_button')
+    delete_button.setAttribute('class', 'button red')
+    delete_button.innerHTML = '<span class="material-symbols-outlined">delete</button>'
+
+    return delete_button
+}
+
+//Cria botão Editar
+function editButton() {
+    const edit_button = document.createElement('button')
+    edit_button.setAttribute('type', 'button')
+    edit_button.setAttribute('id', 'edit_button')
+    edit_button.setAttribute('class', 'button green')
+    edit_button.innerHTML = '<span class="material-symbols-outlined">edit</span></button>'
+
+    return edit_button
+}
+
 //Adiciona elementos na tela
 function addTableRows(transactions, type, endpoint) {
     const tableBody = document.getElementById('table-body');
@@ -67,13 +106,34 @@ function addTableRows(transactions, type, endpoint) {
     transactions.forEach(transaction => {
         const tr = createTableTR(transaction)
         tr.appendChild(insertTableTD(transaction.nome, endpoint))
-        tr.appendChild(insertTableTD(transaction.descricao))
+        if (transaction.descricao) {
+            tr.appendChild(insertTableTD(transaction.descricao))
+        }
         tr.appendChild(insertTableTD(convertCurrency(transaction.valor)))
         tr.appendChild(insertTableTD(getNameFromID(transaction[type], endpoint)))
-        tr.appendChild(insertTableTD(formatDate(transaction.data_alteracao)))
+        tr.appendChild(insertLastTableTD(transaction.data_alteracao))
         
         tableBody.appendChild(tr)
     });
+}
+
+//Cria transação
+function createTransaction() {
+    return {
+        tipo_transacao: form.tipo_transacao().select.options[selectedIndex].id,
+        nome: form.nome().value,
+        descricao: form.descricao().value,
+        valor: form.valor().value,
+        tipo_entrada: form.tipo_entrada().select.options[selectedIndex].id,
+        data: form.data().value
+    };
+}
+
+//Salva transação
+function saveTransaction() {
+    showLoading();
+    const transaction = createTransaction();
+    save(transaction)
 }
 
 
@@ -110,6 +170,21 @@ function criaLinha(element) {
 
     return linha;
 }
+
+const form = {
+    tipo_transacao: () => document.getElementById("tipo_transacao"),
+    nome: () => document.getElementById('nome'),
+    descricao: () => document.getElementById("descricao"),
+    valor: () => document.getElementById("valor"),
+    tipo_entrada: () => document.getElementById('tipo_entrada'),
+    data: () => document.getElementById("data"),
+    saveButton: () => document.getElementById("save-button")
+    
+    
+}
+
+
+
 
 function main() {
     let data = fazGet("http://localhost:3000/entradas")

@@ -20,6 +20,15 @@
     background-color: white;
 }
 
+.recorts td text {
+    position: absolute;
+    top: 50%;
+}
+
+tr:hover td {
+    background-color: #606de360;
+}
+
 .tiposaidas {
     border-style: none;
     border-left: 10px solid red;
@@ -32,8 +41,4 @@
 .records th:last-child,
 .recors td:last-child {
     padding: 20;
-    }
-
-.records.tr:hover {
-    background-color: var(--secundary-color);
 }

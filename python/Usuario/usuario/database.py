@@ -1,7 +1,7 @@
 from peewee import *
 
 #HOST = "delta-mysqlserver.mysql.database.azure.com"
-HOST = "useful-figure-363814:southamerica-east1:deltabd-agoravai"
+HOST = "35.198.23.78"
 #USER = "DeltaAdmin@delta-mysqlserver"
 USER = "root"
 #PASSWORD = "D3lt4T3e4m!"

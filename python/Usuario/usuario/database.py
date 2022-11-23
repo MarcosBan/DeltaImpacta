@@ -1,14 +1,14 @@
 from peewee import *
 
 #HOST = "delta-mysqlserver.mysql.database.azure.com"
-HOST = "35.198.23.78"
+HOST = "34.29.12.55"
 #USER = "DeltaAdmin@delta-mysqlserver"
 USER = "root"
 #PASSWORD = "D3lt4T3e4m!"
-PASSWORD = "root" #"e4EyAPShpq"
+PASSWORD = "6mX-^|(XxhQQs|<8" #"e4EyAPShpq"
 PORT = "3306"
 #DATABASE = 'budgettracker'
-DATABASE = "deltabd-agoravai" #xWPAAVgWh1"
+DATABASE = "deltateamdb" #xWPAAVgWh1"
 
 conn = MySQLDatabase(
     DATABASE, user=USER,

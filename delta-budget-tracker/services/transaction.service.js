@@ -11,16 +11,16 @@ const transactionService = {
             endpoint: `http://localhost:3000/transactions/${uid}`
         })
     },
-    remove: uid => {
+    remove: (id, endpoint) => {
         return callApi({
             method: "DELETE",
-            endpoint: `http://localhost:3000/transactions/${uid}`
+            endpoint: `http://localhost:3000/${endpoint}/${id}`
         })
     },
-    save: transaction => {
-        return callApi({
+    save: (transaction, endpoint) => {
+            return callApi({
             method: "POST",
-            endpoint: "http://localhost:3000/transactions",
+            endpoint: `http://localhost:3000/${endpoint}`,
             params: transaction
         })
     },

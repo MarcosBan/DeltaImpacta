@@ -35,6 +35,7 @@ function insertTableTD(props, set_class) {
     if(set_class) {
         td.innerHTML = props
         td.setAttribute('class', set_class)
+        td.setAttribute('id', set_class)
     } else {
         td.innerHTML = props
     }
@@ -42,12 +43,12 @@ function insertTableTD(props, set_class) {
 }
 
 //Insere os dados na última coluna, contendo os botões editar e excluir
-function insertLastTableTD(props) {
+function insertLastTableTD(transaction) {
     const td = document.createElement('td')
-    const delete_button = deleteButton()
+    const delete_button = deleteButton(transaction)
     const edit_button = editButton()
 
-    td.innerHTML = formatDate(props)
+    td.innerHTML = formatDate(transaction.data_alteracao)
     td.appendChild(delete_button)
     td.appendChild(edit_button)    
 
@@ -78,14 +79,41 @@ function formatDate(date) {
 }
 
 //Cria botão Excluir
-function deleteButton() {
+function deleteButton(transaction) {
     const delete_button = document.createElement('button')
     delete_button.setAttribute('type', 'button')
     delete_button.setAttribute('id', 'delete_button')
     delete_button.setAttribute('class', 'button red')
     delete_button.innerHTML = '<span class="material-symbols-outlined">delete</button>'
-
+    
+    if (transaction.tipo_entrada_id) {
+        const endpoint = 'entradas'
+        delete_button.addEventListener("click", event => {
+            event.stopPropagation();
+            askRemoveTransaction(transaction, endpoint);
+        })
+    } else {
+        const endpoint = 'saidas'
+        delete_button.addEventListener("click", event => {
+            event.stopPropagation();
+            askRemoveTransaction(transaction, endpoint);
+        })
+    }
     return delete_button
+}
+    
+//Cria notificação de confirmação de deleção
+function askRemoveTransaction(transaction, endpoint) {
+    const shouldRemove = confirm('Deseja remover a transação?');
+    if (shouldRemove) {
+        removeTransaction(transaction, endpoint);
+    }
+}
+
+//Remove a transação
+function removeTransaction(transaction, endpoint) {
+    transactionService.remove(transaction.id, endpoint)
+    document.getElementById(transaction.id).remove();
 }
 
 //Cria botão Editar
@@ -111,7 +139,7 @@ function addTableRows(transactions, type, endpoint) {
         }
         tr.appendChild(insertTableTD(convertCurrency(transaction.valor)))
         tr.appendChild(insertTableTD(getNameFromID(transaction[type], endpoint)))
-        tr.appendChild(insertLastTableTD(transaction.data_alteracao))
+        tr.appendChild(insertLastTableTD(transaction))
         
         tableBody.appendChild(tr)
     });
@@ -119,21 +147,52 @@ function addTableRows(transactions, type, endpoint) {
 
 //Cria transação
 function createTransaction() {
-    return {
-        tipo_transacao: form.tipo_transacao().select.options[selectedIndex].id,
-        nome: form.nome().value,
-        descricao: form.descricao().value,
-        valor: form.valor().value,
-        tipo_entrada: form.tipo_entrada().select.options[selectedIndex].id,
-        data: form.data().value
-    };
+    const tipo_transacao = form.tipo_transacao().value
+
+    if(tipo_transacao == 'tipoentradas') {
+        const endpoint = 'entradas'
+        const entradas = {
+            nome: form.nome().value,
+            valor: parseFloat(form.valor().value),
+            tipo_entrada_id: form.tipo_entrada().value,
+            usuario_id: 1,
+            descricao: form.descricao().value,
+            data_criacao: form.data().value,
+            data_alteracao: form.data().value,
+            ativo: 1
+        }
+        return [entradas, endpoint]
+    } 
+    if(tipo_transacao == 'tiposaidas') {
+        const endpoint = 'saidas'
+        const saidas = {
+            nome: form.nome().value,
+            valor: parseFloat(form.valor().value),
+            tipo_saida_id: form.tipo_entrada().value,
+            usuario_id: 1,
+            descricao: form.descricao().value,
+            data_criacao: form.data().value,
+            data_alteracao: form.data().value,
+            ativo: 1
+        }
+        return [saidas, endpoint]
+    }
+    
 }
 
-//Salva transação
+//Cria e chama a função que salva a transação
 function saveTransaction() {
     showLoading();
     const transaction = createTransaction();
-    save(transaction)
+    save(transaction[0], transaction[1])
+}
+
+//Função que chama a camada de serviço e salva a transação
+function save(transaction, endpoint) {
+    showLoading();
+    transactionService.save(transaction, endpoint)
+    hideLoading();
+    closeModal()
 }
 
 

@@ -100,22 +100,23 @@
         </header>
         <form class="modal-form">
           <select id="tipo_transacao" class="modal-field" placeholder="Tipo de Transação">
-            <option id="tipoentradas">Entrada</option>
-            <option id="tiposaidas">Saída</option>
+            <option value="tipoentradas">Entrada</option>
+            <option value="tiposaidas">Saída</option>
           </select>
           <input id="nome" type="text" class="modal-field" placeholder=" Nome">
           <input id="descricao" type="text" class="modal-field" placeholder=" Descrição">
           <input id="valor" type="number" min="1" step="any" class="modal-field" placeholder=" Valor">
-          <select id="tipo_entrada" class="modal-field" placeholder="Tipo de Entrada">
-            <option id="1" value="">Selecione o Tipo de Transação</option>
-            <option id="5" value="Salário Mensal">Salário Mensal</option>
-            <option id="2" value="Adiantamento">Adiantamento</option>
-            <option id="3" value="Crédito">Crédito</option>
-            <option id="2" value="Mercado">Mercado</option>
-            <option id="3" value="Educação">Educação</option>
-            <option id="4" value="Lazer">Lazer</option>
-            <option id="5" value="Cartão de Crédito">Cartão de Crédito</option>
-            <option id="1" value="Contas">Contas</option>
+          <select id="tipo_entrada" class="select-entry" placeholder="Tipo de Entrada">
+            <option id="" value="">Selecione o Tipo de Transação</option>
+            <option value="7">Salário</option>
+            <option value="5">Adiantamento</option>
+            <option value="6">Crédito</option>
+            <option value="1">Despesa Pontual</option>
+            <option value="2">Mercado</option>
+            <option value="3">Educação</option>
+            <option value="4">Lazer</option>
+            <option value="5">Cartão de Crédito</option>
+            <option value="6">Contas</option>
           </select>
           <input id="data" type="date" class="modal-field" placeholder="Data">
         </form>

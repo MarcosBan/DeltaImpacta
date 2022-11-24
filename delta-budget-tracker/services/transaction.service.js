@@ -1,14 +1,29 @@
 const transactionService = {
+    getByID(id, endpoint) {
+        let request = new XMLHttpRequest()
+        //request.open("GET", `https://apibudgettracker.azurewebsites.net/${endpoint}/view/${id}`, false)
+        request.open("GET", `http://localhost:3000/${endpoint}/${id}`, false)
+        request.send()
+        return request.responseText
+    },
+
+    getAll(endpoint) {
+        let request = new XMLHttpRequest()
+        request.open("GET", `http://localhost:3000/${endpoint}`, false)
+        request.send()
+        return request.responseText
+    },
+
     findByUser: () => {
         return callApi({
             method: "GET",
             endpoint: "http://localhost:3000/transactions"
         })
     },
-    findByUid: uid => {
+    findById: (id, endpoint) => {
         return callApi({
             method: "GET",
-            endpoint: `http://localhost:3000/transactions/${uid}`
+            endpoint: `http://localhost:3000/${endpoint}/${id}`
         })
     },
     remove: (id, endpoint) => {
@@ -24,10 +39,10 @@ const transactionService = {
             params: transaction
         })
     },
-    update: transaction => {
+    update: (transaction, endpoint) => {
         return callApi({
             method: "PATCH",
-            endpoint: `http://localhost:3000/transactions/${transaction.uid}`,
+            endpoint: `http://localhost:3000/${endpoing}/${transaction.id}`,
             params: transaction
         })
     }

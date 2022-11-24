@@ -103,7 +103,7 @@
             <option value="tipoentradas">Entrada</option>
             <option value="tiposaidas">Saída</option>
           </select>
-          <input id="nome" type="text" class="modal-field" placeholder=" Nome">
+          <input id="nome" data-index="new" type="text" class="modal-field" placeholder=" Nome">
           <input id="descricao" type="text" class="modal-field" placeholder=" Descrição">
           <input id="valor" type="number" min="1" step="any" class="modal-field" placeholder=" Valor">
           <select id="tipo_entrada" class="select-entry" placeholder="Tipo de Entrada">
@@ -126,6 +126,40 @@
         </footer>
       </div>
     </div>
+    <div class="modal" id="modal-edit">
+      <div class="modal-content">
+        <header class="modal-header">
+          <h2>Editar Transação</h2>
+          <span class="modal-close" id="modalClose-edit">&#10006;</span>
+        </header>
+        <form class="modal-form">
+          <select id="tipo_transacao-edit" class="modal-field" placeholder="Tipo de Transação">
+            <option value="tipoentradas">Entrada</option>
+            <option value="tiposaidas">Saída</option>
+          </select>
+          <input id="nome-edit" type="text" class="modal-field" placeholder=" Nome">
+          <input id="descricao-edit" type="text" class="modal-field" placeholder=" Descrição">
+          <input id="valor-edit" type="number" min="1" step="any" class="modal-field" placeholder=" Valor">
+          <select id="tipo_entrada-edit" class="select-entry" placeholder="Tipo de Entrada">
+            <option id="" value="">Selecione o Tipo de Transação</option>
+            <option value="7">Salário</option>
+            <option value="5">Adiantamento</option>
+            <option value="6">Crédito</option>
+            <option value="1">Despesa Pontual</option>
+            <option value="2">Mercado</option>
+            <option value="3">Educação</option>
+            <option value="4">Lazer</option>
+            <option value="5">Cartão de Crédito</option>
+            <option value="6">Contas</option>
+          </select>
+          <input id="data-edit" type="date" class="modal-field" placeholder="Data">
+        </form>
+        <footer class="modal-footer">
+          <button onclick="saveTransaction()" id="save-button" class="button green">Salvar</button>
+          <button class="button purple" id="modalCancel-edit">Cancelar</button>
+        </footer>
+      </div>
+    </div>
   </main>
   <footer>
     Copyright &copy; Delta Team
@@ -134,9 +168,9 @@
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
+  <script src="../../services/transaction.service.js"></script>
   <script src="./main.js"></script>
   <script src="../../loading.js"></script>
-  <script src="../../services/transaction.service.js"></script>
   <script src="../../sidebar.js"></script>
 
 </body>

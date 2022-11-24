@@ -2,20 +2,20 @@
 
 ## Web App Voltado para o gerenciamento de gastos.
 
-> O inicio de tudo... 
+*O inicio de tudo...*
 
 Durante uma conversa sobre o projeto que poderiamos desenvolver como trabalho final, foi uma decissão unânime de que seria uma boa ter um sistema que nos ajudasse a ter uma visão melhor de nossos gastos! 
 
-# Planejamento inicial
+## Planejamento inicial
 
 Em nossas primeiras Weeklys realizamos o desenho inicial da infraestrutura o esboço das atividades a serem executadas e por fim a organização do nosso banco de Dados.
 
-[IMAGEM INFRA INICIAL]
+![IMAGEM-INFRA-INICIAL](imgs/arquitetura_inicial__Budget_Tracker.drawio.png)
 
-# Requisitos iniciais
+## Requisitos iniciais
 
-Módulo de Usuário
-</br>		
+*Módulo de Usuário*
+
 		US => Implemente uma página de cadastro de usuário.
 				Como, Usuário do sistema 
 				quero criar a minha conta
@@ -31,7 +31,7 @@ Módulo de Usuário
 				O sistema deve validar se o e-mail informado já existe na base de dados
 				A página deve seguir o padrão de identidade visual.
 				As confirmações devem ser feitas usando o template de modal com as opções Enviar, Cancelar e Sair.
-</br>
+
 		US => Implemente uma visão dos dados do usuário.
 				Como, Usuário do sistema 
 				quero visualizar e editar meus dados
@@ -50,7 +50,7 @@ Módulo de Usuário
 				A página deve seguir o padrão de identidade visual.
 				A página deve seguir o template para visualização de dados.
 				As confirmações devem ser feitas usando o template de modal com as opções Editar, Cancelar e Sair.
-</br>
+
 		US => Criação de página de Login
 				Como, Usuário do sistema 
 				quero me autenticar no sistema
@@ -77,7 +77,7 @@ Módulo de Usuário
 
 				A página deve seguir o padrão de identidade visual.
 				As confirmações devem ser feitas usando o template de modal com as opções Enviar, Cancelar e Sair.
-</br>	
+
 		US => Criação de página de recuperação de senha
 				Como, Usuário do sistema 
 				quero poder recuperar minha senha
@@ -112,8 +112,9 @@ Módulo de Usuário
 				A página deve seguir o padrão de identidade visual.
 				As confirmações devem ser feitas usando o template de modal com as opções Enviar, Cancelar e Sair.
 				
-</br>	
-	Módulo de Serviços
+
+*Módulo de Serviços*
+
 		US => Implemente uma visão das despesas do usuário.
 				Como, Usuário do sistema 
 				quero gerir a todas as despesas
@@ -264,7 +265,9 @@ Módulo de Usuário
 
 				receitas => recebidos
 				despesas => pagos
-	Dashboards
+
+*Dashboards*
+
 			US => 
 			como, Usuário do sistema
 			quero poder visualizar gráficos relacionados a despesas e receitas
@@ -286,7 +289,7 @@ Módulo de Usuário
 
 __Bom nem todos os requisitos foram entregues mas seguimos em frente!__
 
-# Diagramas de Uso
+# Diagrama de Uso
 
 Bom como todo bom Software também temos nossos diagramas de uso conforme visto abaixo.
 
@@ -319,8 +322,41 @@ Automação para o Deploy de nossas páginas estáticas dentro da Azure Blob
 
 Provisionamento da nossa infraestrutura dentro da Azure, criação de recursos são executadas atráves dessa integração.
 
-# Visão final 
+![Topologia-Integracoes](imgs/Infra-DeltaImpacta-Integra%C3%A7%C3%B5es.jpg)
 
-Com essas soluções e requisitos citados chegamos ao resultado final de toda a nossa aplicação aqui https://budgetrackerfront.z19.web.core.windows.net/
+## Estrutura do Banco de Dados 
 
-Nossa documentação detalhada de todas as chamadas possíveis do nosso backend: https://apibudgettracker.azurewebsites.net/docs
+Abaixo temos o diagrama da estrutura final das nossas tabelas do banco relacional MySQL
+
+![Tabelas-DB](imgs/Diagrama-Tabelas.PNG)
+
+## Visão final 
+
+Com essas soluções e requisitos citados chegamos ao resultado final de toda a nossa [aplicação.](https://budgetrackerfront.z19.web.core.windows.net/)
+
+Nossa [documentação](https://apibudgettracker.azurewebsites.net/docs) detalhada de todas as chamadas possíveis do nosso backend.
+
+![FINAL](imgs/Infra-DeltaImpacta-Vis%C3%A3o%20Final.jpg)
+
+# Navegando pela Aplicação
+
+> Login
+[GIF]
+
+> Enviando valores de Entrada
+[GIF]
+
+> Enviando valores de Despesas
+[GIF]
+
+
+# Delta Team
+
+| Nome | Função |
+| : - : | :----: |
+| Marcos |  Infra - SRE |
+| Cainã | FrontEnd|
+| William | FrontEnd - Banco de Dados |
+| Marcelo | Banco de Dados |
+| Thiago | Fullstack |
+

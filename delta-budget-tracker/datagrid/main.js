@@ -1,11 +1,51 @@
-//Abre Modal
+/*//Paths
+function toHome() {
+    window.location.href = "../home/home.html";
+}
+
+function toIncome() {
+    window.location.href = "../income/income.html";
+}
+
+function toExpenses() {
+    window.location.href = "./expenses.html";
+}
+
+function toOutcome() {
+    window.location.href = "../outcome/outcome.html";
+}
+
+function newTransaction() {
+    window.location.href="../transaction/transaction.html"
+}
+
+function delayed_home() {
+    setTimeout(toHome, 600)
+}
+
+function delayed_income() {
+    setTimeout(toIncome, 600)
+}
+
+function delayed_expenses() {
+    setTimeout(toExpenses, 600)
+}
+
+function delayed_outcome() {
+    setTimeout(toOutcome, 600)
+}
+*/
+
+
+//Eventos
+    //Abre Modal
 const openModal = () => document.getElementById('modal')
     .classList.add('active')
 
 document.getElementById('adicionarTransacao')
     .addEventListener('click', openModal)
 
-//Fecha Modal
+    //Fecha Modal
 const closeModal = () => document.getElementById('modal')
     .classList.remove('active')
 
@@ -16,11 +56,11 @@ document.getElementById('modalCancel')
     .addEventListener('click', closeModal)
 
 
-//Abre Modal de edição
+    //Abre Modal de edição
 const openModalEdit = () => document.getElementById('modal-edit')
 .classList.add('active')
 
-//Fecha Modal de edição
+    //Fecha Modal de edição
 const closeModalEdit = () => document.getElementById('modal-edit')
     .classList.remove('active')
 
@@ -29,7 +69,6 @@ document.getElementById('modalClose-edit')
 
 document.getElementById('modalCancel-edit')
     .addEventListener('click', closeModalEdit)
-
 
 //Cria linha da tabela
 function createTableTR(transaction) {
@@ -68,7 +107,7 @@ function insertLastTableTD(transaction) {
 
 //Recupera nome do tipo da transação por id
 function getNameFromID(transactionTypeID, endpoint) {
-    let data = transactionService.getAll(endpoint)
+    let data = transactionServiceDevelop.getAll(endpoint)
     let transactionType = JSON.parse(data);
     let nome = 'vazio'
 
@@ -95,6 +134,7 @@ function editButton(transaction) {
     edit_button.setAttribute('type', 'button')
     edit_button.setAttribute('id', 'edit_button')
     edit_button.setAttribute('class', 'button green')
+    edit_button.setAttribute('data-action', 'edit')
     edit_button.innerHTML = '<span class="material-symbols-outlined">edit</span></button>'
 
     if (transaction.tipo_entrada_id) {
@@ -116,7 +156,7 @@ function editButton(transaction) {
 //Localiza transação por ID, e abre o modal para edição
 function getTransactionByID(id, endpoint) {
     
-    transactionService.findById(id, endpoint)
+    transactionServiceDevelop.findById(id, endpoint)
         .then(transaction => {
             if (transaction) {
                 fillTransactionToEdit(transaction, endpoint);
@@ -130,6 +170,7 @@ function getTransactionByID(id, endpoint) {
 //Preenche o Modal para edição
 function fillTransactionToEdit(transaction, endpoint) {
     if (endpoint == 'entradas') {
+        id = transaction.id
         document.getElementById('tipo_transacao-edit').value = 'tipoentradas'
         document.getElementById('nome-edit').value = transaction.nome
         document.getElementById('valor-edit').value = transaction.valor
@@ -145,6 +186,7 @@ function fillTransactionToEdit(transaction, endpoint) {
         document.getElementById('data-edit').value = data_field
 
     } else {
+        id = transaction.id
         document.getElementById('tipo_transacao-edit').value = 'tiposaidas'
         document.getElementById('nome-edit').value = transaction.nome
         document.getElementById('valor-edit').value = transaction.valor
@@ -195,7 +237,7 @@ function askRemoveTransaction(transaction, endpoint) {
 
 //Remove a transação
 function removeTransaction(transaction, endpoint) {
-    transactionService.remove(transaction.id, endpoint)
+    transactionServiceDevelop.remove(transaction.id, endpoint)
     document.getElementById(transaction.id).remove();
 }
 
@@ -252,80 +294,70 @@ function createTransaction() {
 
 }
 
-//Cria e chama a função que salva a transação
-function saveTransaction() {
-    const transaction = createTransaction();
-    console.log(transaction)
-    if (transaction.tipo_entrada_id) {
-        endpoint = 'entradas'
+function editTransaction() {
+    const tipo_transacao = form.tipo_transacao_edit().value
 
-        if (isNewTransaction(transaction.id, endpoint)) {
-            console.log('Novinha')
-            //save(transaction[0], transaction[1])
-            //closeModal();
-        } else {
-            console.log('editando')
-            //update(transaction)
-            //closeModalEdit();
+    if (tipo_transacao == 'tipoentradas') {
+        const endpoint = 'entradas'
+        const entradas = {
+            id: id,
+            nome: form.nome_edit().value,
+            valor: parseFloat(form.valor_edit().value),
+            tipo_entrada_id: form.tipo_entrada_edit().value,
+            usuario_id: 1,
+            descricao: form.descricao_edit().value,
+            data_criacao: form.data_edit().value,
+            data_alteracao: form.data_edit().value,
+            ativo: 1
         }
-    } else {
-        endpoint = 'saidas'
-
-        if (isNewTransaction(transaction.id, endpoint)) {
-            console.log('Novinha')
-            //save(transaction[0], transaction[1])
-            //closeModal();
-        } else {
-            console.log('editando')
-            //update(transaction)
-            //closeModalEdit();
+        return [entradas, endpoint]
+    }
+    if (tipo_transacao == 'tiposaidas') {
+        const endpoint = 'saidas'
+        const saidas = {
+            id : id,
+            nome: form.nome_edit().value,
+            valor: parseFloat(form.valor_edit().value),
+            tipo_saida_id: form.tipo_entrada_edit().value,
+            usuario_id: 1,
+            descricao: form.descricao_edit().value,
+            data_criacao: form.data_edit().value,
+            data_alteracao: form.data_edit().value,
+            ativo: 1
         }
+        return [saidas, endpoint]
     }
 
+}
 
+//Cria e chama a função que salva a transação
+function saveTransaction() {
+    console.log('Salvando')
+    const transaction = createTransaction();
+    save(transaction[0], transaction[1])
+}
 
-    
+//Edita transação
+function saveEdit() {
+    console.log('Editando')
+    const transaction = editTransaction();
+    update(transaction[0], transaction[1])
 }
 
 //Função que chama a camada de serviço e salva a transação
 function save(transaction, endpoint) {
-    transactionService.save(transaction, endpoint)
+    transactionServiceDevelop.save(transaction, endpoint)
 }
 
 //Atualiza transação
-function update(transaction) {
-    transactionService.update(transaction, endpoint)
+function update(transaction, endpoint) {
+    transactionServiceDevelop.update(transaction, endpoint)
         .then(() => {
             closeModalEdit();
         }).catch(() => {
             hideLoading();
             alert('Erro ao atualizar transação')
         })
-}
-
-//Valida se é uma nova transação ou não
-function isNewTransaction(id, endpoint) {
-    return transactionService.findById(id, endpoint) ? false: true;
-}
-
-function findTransactionID() {
-    transactionService.getAll
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('id');
-}
-
-function criaLinha(element) {
-    const linha = document.createElement("tr");
-    const tdId = document.createElement("td");
-    const tdNome = document.createElement("td");
-
-    tdId.innerHTML = element.id
-    tdNome.innerHTML = element.nome
-
-    linha.appendChild(tdId);
-    linha.appendChild(tdNome);
-
-    return linha;
 }
 
 const form = {
@@ -335,18 +367,27 @@ const form = {
     valor: () => document.getElementById("valor"),
     tipo_entrada: () => document.getElementById('tipo_entrada'),
     data: () => document.getElementById("data"),
-    saveButton: () => document.getElementById("save-button")
+    saveButton: () => document.getElementById("save-button"),
+
+    //Para editar transacao
+    tipo_transacao_edit: () => document.getElementById("tipo_transacao-edit"),
+    nome_edit: () => document.getElementById('nome-edit'),
+    descricao_edit: () => document.getElementById("descricao-edit"),
+    valor_edit: () => document.getElementById("valor-edit"),
+    tipo_entrada_edit: () => document.getElementById('tipo_entrada-edit'),
+    data_edit: () => document.getElementById("data-edit"),
+    saveButton_edit: () => document.getElementById("save-edit")
 }
 
 function main() {
     //endpoints
-    let data_entradas = transactionService.getAll("entradas")
+    let data_entradas = transactionServiceDevelop.getAll("entradas")
     let entradas = JSON.parse(data_entradas);
 
-    let data_saidas = transactionService.getAll("saidas")
+    let data_saidas = transactionServiceDevelop.getAll("saidas")
     let saidas = JSON.parse(data_saidas);
 
-    let data_tiposaidas = transactionService.getAll("tiposaidas")
+    let data_tiposaidas = transactionServiceDevelop.getAll("tiposaidas")
     let tipo_saidas = JSON.parse(data_tiposaidas);
 
     addTableRows(entradas, 'tipo_entrada_id', 'tipoentradas')

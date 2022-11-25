@@ -1,13 +1,22 @@
 <!DOCTYPE html>
 <meta charset="UTF-8">
-<html>    
+<html>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
     <link rel="stylesheet" href="../../global.css" />
     <link rel="stylesheet" href="../../sidebar.css">
     <link rel="stylesheet" href="./home.css">
+
+    <script src="../../services/transaction.service.js"></script>
+    <script src="./home.js"></script>
+
     <head>
         <title>Home - Delta Budget Tracker</title>
     </head>
+    <header>
+        <h1>Dashboard</h1>
+    </header>
     <body>
+        <!--sidebar-->
         <div class="navigation sidebar-open">
             <div class="menuToggle"></div>
             <ul>
@@ -49,20 +58,134 @@
                 </li>
             </ul>
         </div>
+        <!--page-->
+        <main>
+        <div class="graph-1">
+        <canvas id="despesas_tipo"></canvas>
 
+        <script>
+            var xValues = getxValues();
+            var yValues = getyValues();
+            var barColors = [
+                "#00aba9",
+                "#f44336"
+            ];
 
-        <h1>Under Construction...</h1>
-        <img src="../../images/under_construction2.png">
-
-
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <script src="../../sidebar.js"></script>
-    <script src="./home.js"></script>
+            new Chart("despesas_tipo", {
+                type: "doughnut",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        backgroundColor: barColors,
+                        data: yValues
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: "Total de Despesas por Tipo"
+                    }
+                }
+            });
+        </script>
+        </div>
+        <div class="graph-2">
+            <canvas id="myChart2"></canvas>
+    
+            <script>
+                var xValues = getxValuesNomeValor();
+                var yValues = getyValuesNomeValor();
+                var barColors = [
+                    "#00aba9",
+                    "#f44336"
+                ];
+    
+                new Chart("myChart2", {
+                    type: "bar",
+                    data: {
+                        labels: xValues,
+                        datasets: [{
+                            backgroundColor: barColors,
+                            data: yValues
+                        }]
+                    },
+                    options: {
+                        title: {
+                            display: true,
+                            text: "Todas as Despesas"
+                        }
+                    }
+                });
+            </script>
+            </div>
+            <div class="graph-3">
+                <canvas id="myChart3"></canvas>
         
-    <script src="https://www.gstatic.com/firebasejs/9.10.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.10.0/firebase-auth-compat.js"></script>
-    <script src="../../firebase-init.js"></script>
-    <!--<script src="../../auth-guard.js"></script>-->
+                <script>
+                    var xValues = getxValues();
+                    var yValues = getyValues();
+                    var barColors = [
+                        "#00aba9",
+                        "#f44336"
+                    ];
+        
+                    new Chart("myChart3", {
+                        type: "pie",
+                        data: {
+                            labels: xValues,
+                            datasets: [{
+                                backgroundColor: barColors,
+                                data: yValues
+                            }]
+                        },
+                        options: {
+                            title: {
+                                display: true,
+                                text: "Todas as Despesas"
+                            }
+                        }
+                    });
+                </script>
+        </div>
+        <div class="graph-4">
+            <canvas id="myChart4"></canvas>
+    
+            <script>
+                var xValues = getxValues();
+                var yValues = getyValues();
+                var barColors = [
+                    "#00aba9",
+                    "#f44336"
+                ];
+    
+                new Chart("myChart4", {
+                    type: "pie",
+                    data: {
+                        labels: xValues,
+                        datasets: [{
+                            backgroundColor: barColors,
+                            data: yValues
+                        }]
+                    },
+                    options: {
+                        title: {
+                            display: true,
+                            text: "Todas as Despesas"
+                        }
+                    }
+                });
+            </script>
+            </div>
+        </main>
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+        <script src="../../sidebar.js"></script>
+        
+            
+        <script src="https://www.gstatic.com/firebasejs/9.10.0/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.10.0/firebase-auth-compat.js"></script>
+        <script src="../../firebase-init.js"></script>
+
     </body>
-</html>
+
+    </html>

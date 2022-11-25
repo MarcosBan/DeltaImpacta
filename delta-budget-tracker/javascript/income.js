@@ -139,7 +139,7 @@ function editButton(transaction) {
     edit_button.setAttribute('data-action', 'edit')
     edit_button.innerHTML = '<span class="material-symbols-outlined">edit</span></button>'
 
-    if (transaction.tipo_entrada_id) {
+    if (transaction.tipo_entrada) {
         const endpoint = 'entradas'
         edit_button.addEventListener("click", event => {
             event.stopPropagation();
@@ -176,7 +176,7 @@ function fillTransactionToEdit(transaction, endpoint) {
         document.getElementById('tipo_transacao-edit').value = 'tipoentradas'
         document.getElementById('nome-edit').value = transaction.nome
         document.getElementById('valor-edit').value = transaction.valor
-        document.getElementById('tipo_entrada-edit').value = transaction.tipo_entrada_id
+        document.getElementById('tipo_entrada-edit').value = transaction.tipo_entrada
         
         if (transaction.descricao) {
             document.getElementById('descricao-edit').value = transaction.descricao
@@ -192,7 +192,7 @@ function fillTransactionToEdit(transaction, endpoint) {
         document.getElementById('tipo_transacao-edit').value = 'tiposaidas'
         document.getElementById('nome-edit').value = transaction.nome
         document.getElementById('valor-edit').value = transaction.valor
-        document.getElementById('tipo_entrada-edit').value = transaction.tipo_saida_id
+        document.getElementById('tipo_entrada-edit').value = transaction.tipo_saida
         
         if (transaction.descricao) {
             document.getElementById('descricao-edit').value = transaction.descricao
@@ -213,7 +213,7 @@ function deleteButton(transaction) {
     delete_button.setAttribute('class', 'button red')
     delete_button.innerHTML = '<span class="material-symbols-outlined">delete</button>'
 
-    if (transaction.tipo_entrada_id) {
+    if (transaction.tipo_entrada) {
         const endpoint = 'entradas'
         delete_button.addEventListener("click", event => {
             event.stopPropagation();
@@ -270,7 +270,7 @@ function createTransaction() {
         const entradas = {
             nome: form.nome().value,
             valor: parseFloat(form.valor().value),
-            tipo_entrada_id: form.tipo_entrada().value,
+            tipo_entrada: form.tipo_entrada().value,
             usuario_id: 1,
             descricao: form.descricao().value,
             data_criacao: form.data().value,
@@ -284,7 +284,7 @@ function createTransaction() {
         const saidas = {
             nome: form.nome().value,
             valor: parseFloat(form.valor().value),
-            tipo_saida_id: form.tipo_entrada().value,
+            tipo_saida: form.tipo_entrada().value,
             usuario_id: 1,
             descricao: form.descricao().value,
             data_criacao: form.data().value,
@@ -305,7 +305,7 @@ function editTransaction() {
             id: id,
             nome: form.nome_edit().value,
             valor: parseFloat(form.valor_edit().value),
-            tipo_entrada_id: form.tipo_entrada_edit().value,
+            tipo_entrada: form.tipo_entrada_edit().value,
             usuario_id: 1,
             descricao: form.descricao_edit().value,
             data_criacao: form.data_edit().value,
@@ -320,7 +320,7 @@ function editTransaction() {
             id : id,
             nome: form.nome_edit().value,
             valor: parseFloat(form.valor_edit().value),
-            tipo_saida_id: form.tipo_entrada_edit().value,
+            tipo_saida: form.tipo_entrada_edit().value,
             usuario_id: 1,
             descricao: form.descricao_edit().value,
             data_criacao: form.data_edit().value,
@@ -392,7 +392,7 @@ function main() {
     let data_tiposaidas = transactionServiceDevelop.getAll("tiposaidas")
     let tipo_saidas = JSON.parse(data_tiposaidas);
 
-    addTableRows(entradas, 'tipo_entrada_id', 'tipoentradas')
+    addTableRows(entradas, 'tipo_entrada', 'tipoentradas')
 
 }
 main()

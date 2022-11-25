@@ -16,7 +16,7 @@ function toOutcome() {
 }
 
 function toUser() {
-    window.location.href = "./user.html";
+    window.location.href = "../user/user.html";
 }
 
 function delayed_home() {

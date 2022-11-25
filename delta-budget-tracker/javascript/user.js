@@ -42,3 +42,41 @@ function delayed_user() {
 function goBack() {
     window.history.go(-1); return false;
 }
+
+function fillForm() {
+    transactionServiceDevelop.findById('1', 'usuarios')
+    .then((user) => {
+        form.nome().value = user.nome
+        form.email().value = user.email
+        form.data_nasc().value = user.nascimento
+
+        //data_string = JSON.stringify(user.nascimento)
+        //ano = data_string.substring(4, 8)
+        //mes = data_string.substring(2, 4)
+        //dia = data_string.substring(0, 2)
+
+        //form.data_nasc().value = ano + '-' + mes + '-' + dia
+    })
+}
+
+function updateUser () {
+    dados = {
+        id: 1,
+        nome: form.nome().value,
+        email: form.email().value,
+        nascimento: form.data_nasc().value,
+        senha: document.getElementById('password').value
+    }
+
+    transactionServiceDevelop.update(dados, 'usuarios')
+}
+
+window.onload = function () {
+    fillForm()
+}
+
+const form = {
+    nome: () => document.getElementById('nome-usuario'),
+    email: () => document.getElementById('email-usuario'),
+    data_nasc: () => document.getElementById('dataNasc-usuario')
+}

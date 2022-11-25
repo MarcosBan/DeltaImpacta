@@ -1,4 +1,4 @@
-/*//Paths
+//Paths
 function toHome() {
     window.location.href = "../home/home.html";
 }
@@ -8,15 +8,19 @@ function toIncome() {
 }
 
 function toExpenses() {
-    window.location.href = "./expenses.html";
+    window.location.href = "../expenses/expenses.html";
 }
 
 function toOutcome() {
-    window.location.href = "../outcome/outcome.html";
+    window.location.href = "./outcome.html";
 }
 
-function newTransaction() {
-    window.location.href="../transaction/transaction.html"
+function toUser() {
+    window.location.href = "./user.html";
+}
+
+function delayed_user() {
+    setTimeout(toUser, 600)
 }
 
 function delayed_home() {
@@ -34,7 +38,6 @@ function delayed_expenses() {
 function delayed_outcome() {
     setTimeout(toOutcome, 600)
 }
-*/
 
 
 //Eventos
@@ -390,7 +393,6 @@ function main() {
     let data_tiposaidas = transactionServiceDevelop.getAll("tiposaidas")
     let tipo_saidas = JSON.parse(data_tiposaidas);
 
-    addTableRows(entradas, 'tipo_entrada_id', 'tipoentradas')
     addTableRows(saidas, 'tipo_saida_id', 'tiposaidas')
 
 

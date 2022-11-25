@@ -1,5 +1,6 @@
+//Paths
 function toHome() {
-    window.location.href = "./home.html";
+    window.location.href = "../home/home.html";
 }
 
 function toIncome() {
@@ -15,11 +16,7 @@ function toOutcome() {
 }
 
 function toUser() {
-    window.location.href = "../user/user.html";
-}
-
-function delayed_user() {
-    setTimeout(toUser, 600)
+    window.location.href = "./user.html";
 }
 
 function delayed_home() {
@@ -36,4 +33,12 @@ function delayed_expenses() {
 
 function delayed_outcome() {
     setTimeout(toOutcome, 600)
+}
+
+function delayed_user() {
+    setTimeout(toUser, 600)
+}
+
+function goBack() {
+    window.history.go(-1); return false;
 }

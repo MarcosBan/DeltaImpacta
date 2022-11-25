@@ -1,12 +1,95 @@
 <!DOCTYPE html>
-<meta charset="UTF-8">
-<html>
-    <title>
-        Usuário
-    </title>
-    <body>
-    <header>
-        Usuário
-    </header>
+<html lang="pt-br">
+
+<head>
+    <link rel="stylesheet" href="../../sidebar.css">
+    <link rel="stylesheet" href="../../css/users.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/button.css">
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuário</title>
+</head>
+<header>
+    <h1 class="header-title">Usuário</h1>
+</header>
+
+<body>
+    <!-- sidebar -->
+    <div class="navigation sidebar-open">
+        <div class="menuToggle"></div>
+        <ul>
+            <li class="list" style="--clr:#606DE3">
+                <a href="#" onclick="delayed_home()">
+                    <span class="icon">
+                        <ion-icon name="home-outline"></ion-icon>
+                    </span>
+                    <span class="text">Home</span>
+                </a>
+            </li>
+            <li class="list" style="--clr:#606DE3">
+                <a href="#" onclick="delayed_income()">
+                    <span class="icon">
+                        <ion-icon name="caret-back-circle-outline"></ion-icon>
+                    </span>
+                    <span class="text">Entradas</span>
+                </a>
+            </li>
+            <li class="list" style="--clr:#606DE3">
+                <a href="#" onclick="delayed_outcome()">
+                    <span class="icon">
+                        <ion-icon name="caret-forward-circle-outline"></ion-icon>
+                    </span>
+                    <span class="text">Despesas</span>
+                </a>
+            </li>
+            <li class="list " style="--clr:#606DE3">
+                <a href="#" onclick="delayed_expenses()">
+                    <span class="icon">
+                        <ion-icon name="wallet-outline"></ion-icon>
+                    </span>
+                    <span class="text">Transações</span>
+                </a>
+            </li>
+            <li class="list" style="--clr:#606DE3">
+                <a href="#" onclick="delayed_user()">
+                    <span class="icon">
+                        <ion-icon name="person-circle-outline"></ion-icon>
+                    </span>
+                    <span class="text">Usuário</span>
+                </a>
+            </li>
+            <li class="list" style="--clr:#606DE3">
+                <a href="#" onclick="delayed_logout()">
+                    <span class="icon">
+                        <ion-icon name="log-out-outline"></ion-icon>
+                    </span>
+                    <span class="text">Sair</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- Page -->
+    <main>
+        <form id="user" class="user">
+            <label>Nome:</label>
+            <input type="text" id="nome-usuario" class="field">
+            <label>E-mail</label>
+            <input type="text" id="email-usuario" class="field">
+            <label>Data de Nascimento</label>
+            <input type="date" id="dataNasc-usuario" class="field">
+            <label>Senha</label>
+            <input type="password" id="password" class="field">
+        </form>
+        <button type="button" class="button purple">Salvar</button>
+        <button type="button" class="button blue" onclick="goBack()">Voltar</button>
+    </main>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="../../sidebar.js"></script>
+    <script src="../../javascript/user.js"></script>
 </body>
+
 </html>

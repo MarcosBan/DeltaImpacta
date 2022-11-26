@@ -54,7 +54,6 @@ function groupBy(list, keyGetter) {
 
 //Recupera nome do tipo da transação por id
 function getNameFromID(transactionTypeID, endpoint) {
-    debugger
     let data = transactionService.getAll(endpoint)
     let transactionType = JSON.parse(data);
     let nome = 'vazio'

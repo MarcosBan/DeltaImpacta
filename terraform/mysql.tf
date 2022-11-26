@@ -15,8 +15,7 @@ resource "azurerm_mysql_server" "deltaserver" {
   geo_redundant_backup_enabled      = true
   infrastructure_encryption_enabled = true
   public_network_access_enabled     = true
-  ssl_enforcement_enabled           = true
-  ssl_minimal_tls_version_enforced  = "TLS1_2"
+  ssl_enforcement_enabled           = false
 }
 
 resource "azurerm_mysql_database" "budgettracker" {

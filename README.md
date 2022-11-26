@@ -293,13 +293,13 @@ __Bom nem todos os requisitos foram entregues mas seguimos em frente!__
 
 Bom como todo bom Software também temos nossos diagramas de uso conforme visto abaixo.
 
-[IMAGENS]
+![DML](imgs/Infra-DeltaImpacta-DML.jpg)
 
 # Infraetrutura Final
 
-Com a evolução dos requisitos e a evolução do nosso ambiente tivemos algumas mudanças na estrutura Final do projeto tendo a seguinte topologia:
+Com a evolução dos requisitos e a evolução do nosso ambiente tivemos algumas mudanças na estrutura Final do projeto tendo arquitetura.
 
-[IMAGEM]
+![FINAL](imgs/Infra-DeltaImpacta-Visao-Final.jpg)
 
 ## Integrações
 
@@ -322,7 +322,7 @@ Automação para o Deploy de nossas páginas estáticas dentro da Azure Blob
 
 Provisionamento da nossa infraestrutura dentro da Azure, criação de recursos são executadas atráves dessa integração.
 
-![Topologia-Integracoes](imgs/Infra-DeltaImpacta-Integra%C3%A7%C3%B5es.jpg)
+![Topologia-Integracoes](imgs/Infra-DeltaImpacta-Integracoes.jpg)
 
 ## Estrutura do Banco de Dados 
 
@@ -335,28 +335,4 @@ Abaixo temos o diagrama da estrutura final das nossas tabelas do banco relaciona
 Com essas soluções e requisitos citados chegamos ao resultado final de toda a nossa [aplicação.](https://budgetrackerfront.z19.web.core.windows.net/)
 
 Nossa [documentação](https://apibudgettracker.azurewebsites.net/docs) detalhada de todas as chamadas possíveis do nosso backend.
-
-![FINAL](imgs/Infra-DeltaImpacta-Vis%C3%A3o%20Final.jpg)
-
-# Navegando pela Aplicação
-
-> Login
-[GIF]
-
-> Enviando valores de Entrada
-[GIF]
-
-> Enviando valores de Despesas
-[GIF]
-
-
-# Delta Team
-
-| Nome | Função |
-| : - : | :----: |
-| Marcos |  Infra - SRE |
-| Cainã | FrontEnd|
-| William | FrontEnd - Banco de Dados |
-| Marcelo | Banco de Dados |
-| Thiago | Fullstack |
 

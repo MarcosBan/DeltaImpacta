@@ -1,0 +1,43 @@
+label {
+    color: #606de3;
+}
+form.user{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    justify-content: center;
+    padding: 10px;
+    gap: 10px;
+    margin-left: 70px;
+    
+}
+
+.field {
+    height: 40px;
+    outline-style: none;
+    border-style: none;
+    box-shadow: 0 0 2px black;
+    padding: 0 10px;
+    font-size: 1rem;;
+}
+
+.field:focus {
+    border: 3px solid var(--primary-color);
+    box-shadow: 0 0 3px var(--primary-color);
+}
+
+button.button.purple {
+    width: 200px;
+    position: relative;
+    margin-left: 80px;
+    
+}
+
+button.blue {
+    background-color: gray;
+    width: 200px;
+    position: relative;
+    margin-left: 335px;
+    bottom: 60px;
+    
+}

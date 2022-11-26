@@ -45,7 +45,38 @@ body {
       font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   }
 
-  img {
-    width: 100%;
-    
-  }
+main {
+  align-content: center;
+}
+
+div.graph-1 {
+  position: relative;
+  width: 60%;
+  max-width:600px;
+  left: 200px;
+  top: 15px;
+}
+
+div.graph-2 {
+  position: relative;
+  width:60%;
+  max-width:600px;
+  left: 800px;
+  bottom: 280px;
+}
+
+div.graph-3 {
+  position: relative;
+  width:50%;
+  max-width:600px;
+  left: 200px;
+  bottom: 250px;
+}
+
+div.graph-4 {
+  position: relative;
+  width:50%;
+  max-width:600px;
+  left: 800px;
+  bottom: 550px;
+}

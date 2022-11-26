@@ -1,0 +1,59 @@
+.button {
+    border-style: none;
+    height: 40px;
+    padding: 3px 6px;
+    background-color: #000;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: box-shadow .6s ease;
+    border-radius: 10px;
+}
+
+.button.purple {
+    background-color: #606DE3;
+}
+
+button.green {
+    background-color: #13ce66;
+}
+
+button.red {
+    background-color: #ff4949;
+}
+
+.button:hover {
+    box-shadow: inset 200px 0 0 #00000055;
+}
+
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 300,
+    'GRAD' 0,
+    'opsz' 35
+}
+
+td button.green {
+    float: right;
+    margin-right: 10px;
+    background-color: white;
+    color: white;
+    transition: box-shadow 0;
+}
+
+td button.red {
+    float: right;
+    margin-right: 10px;
+    background-color: white;
+    color: white;
+    transition: box-shadow 0;
+}
+
+tr:hover button.red {
+    background-color: #ff4949;
+}
+
+tr:hover button.green {
+    background-color: #13ce66;
+}

@@ -27,14 +27,16 @@ const transactionServiceDevelop = {
         })
     },
     save: (transaction, endpoint) => {
-        let request = new XMLHttpRequest()
-        request.open("POST", `http://localhost:3000/${endpoint}`, false)
-        request.send(transaction)
-    },
+        return callApi({
+        method: "POST",
+        endpoint: `http://localhost:3000/${endpoint}`,
+        params: transaction
+    })
+},
     update: (transaction, endpoint) => {
         console.log(transaction, endpoint)
         return callApi({
-            method: "PATCH",
+            method: "PUT",
             endpoint: `http://localhost:3000/${endpoint}/${transaction.id}`,
             params: transaction
         })

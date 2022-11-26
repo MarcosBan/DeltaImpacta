@@ -93,40 +93,38 @@
             <canvas id="myChart2"></canvas>
     
             <script>
-                var xValues = getxValuesNomeValor();
-                var yValues = getyValuesNomeValor();
-                var barColors = [
-                    "#00aba9",
-                    "#f44336"
-                ];
-    
                 new Chart("myChart2", {
-                    type: "bar",
-                    data: {
-                        labels: xValues,
-                        datasets: [{
-                            backgroundColor: barColors,
-                            data: yValues
-                        }]
-                    },
+                    type: 'bar',
+                    data: getBarDataValor(),
                     options: {
+                        responsive: true,
+                        plugins: {
+                        legend: {
+                            position: 'top',
+                        },
                         title: {
                             display: true,
-                            text: "Todas as Despesas"
+                            text: 'Chart.js Bar Chart'
                         }
-                    }
-                });
+                        }
+                    },
+                    });
             </script>
             </div>
             <div class="graph-3">
                 <canvas id="myChart3"></canvas>
         
                 <script>
-                    var xValues = getxValues();
-                    var yValues = getyValues();
+                    var xValues = getxValuesByCategory();
+                    var yValues = getyValuesByCategory();
                     var barColors = [
-                        "#00aba9",
-                        "#f44336"
+                        "#32a852",
+                        "#989c51",
+                        "#6753b5",
+                        "#c23091",
+                        "#30c2bf",
+                        "#131936",
+                        "#361613"
                     ];
         
                     new Chart("myChart3", {
@@ -141,7 +139,7 @@
                         options: {
                             title: {
                                 display: true,
-                                text: "Todas as Despesas"
+                                text: "Despesas por Categoria"
                             }
                         }
                     });
@@ -151,11 +149,14 @@
             <canvas id="myChart4"></canvas>
     
             <script>
-                var xValues = getxValues();
-                var yValues = getyValues();
+                var xValues = getxValuesByValue();
+                var yValues = getyValuesByValue();
                 var barColors = [
-                    "#00aba9",
-                    "#f44336"
+                    "#ff461f",
+                    "#0a5f42",
+                    "#6fa8dc",
+                    "#302061",
+                    "#866846"
                 ];
     
                 new Chart("myChart4", {
@@ -170,7 +171,7 @@
                     options: {
                         title: {
                             display: true,
-                            text: "Todas as Despesas"
+                            text: "Despesas por Valor"
                         }
                     }
                 });

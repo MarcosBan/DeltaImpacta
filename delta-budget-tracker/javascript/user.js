@@ -44,7 +44,7 @@ function goBack() {
 }
 
 function fillForm() {
-    transactionServiceDevelop.findById('1', 'usuarios')
+    transactionService.findById('1', 'usuarios')
     .then((user) => {
         form.nome().value = user.nome
         form.email().value = user.email
@@ -68,7 +68,7 @@ function updateUser () {
         senha: document.getElementById('password').value
     }
 
-    transactionServiceDevelop.update(dados, 'usuarios')
+    transactionService.update(dados, 'usuarios')
 }
 
 window.onload = function () {

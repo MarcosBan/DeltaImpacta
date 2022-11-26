@@ -109,7 +109,7 @@ function insertLastTableTD(transaction) {
 
 //Recupera nome do tipo da transação por id
 function getNameFromID(transactionTypeID, endpoint) {
-    let data = transactionServiceDevelop.getAll(endpoint)
+    let data = transactionService.getAll(endpoint)
     let transactionType = JSON.parse(data);
     let nome = 'vazio'
 
@@ -127,7 +127,7 @@ function convertCurrency(value) {
 
 //Formata o campo data para o padrão BR
 function formatDate(date) {
-    return new Date(date).toLocaleDateString('pt-br');
+    return new Date(date).toLocaleDateString('pt-br', {timeZone: 'UTC'});
 }
 
 //Cria botão Editar
@@ -158,7 +158,7 @@ function editButton(transaction) {
 //Localiza transação por ID, e abre o modal para edição
 function getTransactionByID(id, endpoint) {
     
-    transactionServiceDevelop.findById(id, endpoint)
+    transactionService.findById(id, endpoint)
         .then(transaction => {
             if (transaction) {
                 fillTransactionToEdit(transaction, endpoint);
@@ -239,7 +239,7 @@ function askRemoveTransaction(transaction, endpoint) {
 
 //Remove a transação
 function removeTransaction(transaction, endpoint) {
-    transactionServiceDevelop.remove(transaction.id, endpoint)
+    transactionService.remove(transaction.id, endpoint)
     document.getElementById(transaction.id).remove();
 }
 
@@ -348,12 +348,12 @@ function saveEdit() {
 
 //Função que chama a camada de serviço e salva a transação
 function save(transaction, endpoint) {
-    transactionServiceDevelop.save(transaction, endpoint)
+    transactionService.save(transaction, endpoint)
 }
 
 //Atualiza transação
 function update(transaction, endpoint) {
-    transactionServiceDevelop.update(transaction, endpoint)
+    transactionService.update(transaction, endpoint)
         .then(() => {
             closeModalEdit();
         }).catch(() => {
@@ -383,13 +383,13 @@ const form = {
 
 function main() {
     //endpoints
-    let data_entradas = transactionServiceDevelop.getAll("entradas")
+    let data_entradas = transactionService.getAll("entradas")
     let entradas = JSON.parse(data_entradas);
 
-    let data_saidas = transactionServiceDevelop.getAll("saidas")
+    let data_saidas = transactionService.getAll("saidas")
     let saidas = JSON.parse(data_saidas);
 
-    let data_tiposaidas = transactionServiceDevelop.getAll("tiposaidas")
+    let data_tiposaidas = transactionService.getAll("tiposaidas")
     let tipo_saidas = JSON.parse(data_tiposaidas);
 
     addTableRows(entradas, 'tipo_entrada', 'tipoentradas')
